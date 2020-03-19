@@ -21,129 +21,49 @@ html, input {
 }
 
 html, body {
-  height: 100%;
   margin: 0;
+}
+
+html {
+  background-color: #1e1e1e;
+  padding: 0 2px 2px 2px;
+}
+
+body {
   padding: 0;
 }
 
-ul {
-  list-style: none;
-  word-wrap: break-word;
-}
-
-/* Pages */
-
-.pages {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-
-.page {
-  height: 100%;
-  position: absolute;
-  width: 100%;
-}
-
-/* Login Page */
-
-.login.page {
-  background-color: #000;
-}
-
-.login.page .form {
-  height: 100px;
-  margin-top: -100px;
-  position: absolute;
-
-  text-align: center;
-  top: 50%;
-  width: 100%;
-}
-
-.login.page .form .usernameInput {
-  background-color: transparent;
-  border: none;
-  border-bottom: 2px solid #fff;
-  outline: none;
-  padding-bottom: 15px;
-  text-align: center;
-  width: 400px;
-}
-
-.login.page .title {
-  font-size: 200%;
-}
-
-.login.page .usernameInput {
-  font-size: 200%;
-  letter-spacing: 3px;
-}
-
-.login.page .title, .login.page .usernameInput {
-  color: #fff;
-  font-weight: 100;
-}
-
-/* Chat page */
-
-.chat.page {
-  display: none;
-}
-
-/* Font */
-
-.messages {
-  font-size: 150%;
-}
-
-.inputMessage {
-  font-size: 100%;
-}
-
-.log {
-  color: gray;
-  font-size: 70%;
-  margin: 5px;
+/* Header */
+h1 {
+  color: lightgray;
   text-align: center;
 }
 
-/* Messages */
-
-.chatArea {
-  height: 100%;
-  padding-bottom: 60px;
+/* Table grid */
+table, th, td {
+  border: 1px solid gray;
+  border-collapse: collapse;
 }
 
-.messages {
-  height: 100%;
-  margin: 0;
-  overflow-y: scroll;
-  padding: 10px 20px 10px 20px;
+table.center {
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.message.typing .messageBody {
-  color: gray;
+table.fixed {
+  table-layout: fixed;
+  width: max-content;
 }
 
-.username {
-  font-weight: 700;
-  overflow: hidden;
-  padding-right: 15px;
-  text-align: right;
+table.game:hover {
+  cursor: pointer;
 }
 
-/* Input */
+table.game td {
+  height: 15px;
+  width: 15px;
+}
 
-.inputMessage {
-  border: 10px solid #000;
-  bottom: 0;
-  height: 60px;
-  left: 0;
-  outline: none;
-  padding-left: 10px;
-  position: absolute;
-  right: 0;
-  width: 100%;
+table.game td.alive {
+  background-color: lightblue;
 }
