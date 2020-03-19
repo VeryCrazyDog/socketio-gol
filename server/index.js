@@ -1,18 +1,29 @@
 'use strict'
 
-// Setup basic express server
-const express = require('express')
-const app = express()
+// Include built-in modules
 const path = require('path')
-const server = require('http').createServer(app)
-const io = require('socket.io')(server)
+const http = require('http')
+
+// Include 3rd party modules
+const consoleLogLevel = require('console-log-level')
+const express = require('express')
+const socketIo = require('socket.io')
+
+// Determinate configuration
 const port = process.env.PORT || 3000
 
-server.listen(port, () => {
-  console.log('Server listening at port %d', port)
+// Module initialization
+const logger = consoleLogLevel({
+  level: 'debug',
+  prefix: (level) => {
+    return `${new Date().toISOString()} [${level.toUpperCase()}]`
+  }
 })
+const app = express()
+const server = http.createServer(app)
+const io = socketIo(server)
 
-// Routing
+// Routing setup
 app.use(express.static(path.join(path.dirname(__dirname), 'public')))
 
 // Chatroom
@@ -75,4 +86,9 @@ io.on('connection', (socket) => {
       })
     }
   })
+})
+
+// Start server
+server.listen(port, () => {
+  logger.info(`Server ready at http://localhost:${port}`)
 })
