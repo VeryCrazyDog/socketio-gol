@@ -10,6 +10,7 @@ const express = require('express')
 const socketIo = require('socket.io')
 
 // Determinate configuration
+const MAX_HTTP_BUFFER_SIZE = 8192
 const port = process.env.PORT || 3000
 
 // Module initialization
@@ -21,7 +22,10 @@ const logger = consoleLogLevel({
 })
 const app = express()
 const server = http.createServer(app)
-const io = socketIo(server)
+const io = socketIo(server, {
+  maxHttpBufferSize: MAX_HTTP_BUFFER_SIZE,
+  cookie: false
+})
 
 // Routing setup
 app.use(express.static(path.join(path.dirname(__dirname), 'public')))

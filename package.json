@@ -9,10 +9,11 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^7.1.1",
+    "nodemon": "^2.0.2",
     "standardx": "^5.0.0"
   },
   "scripts": {
-    "start": "node .",
+    "start": "nodemon --ignore public/ ./server/index.js",
     "lint": "npx --no-install standardx || cd .",
     "fix": "npx --no-install standardx --fix || cd .",
     "test": "npx --no-install mocha"
