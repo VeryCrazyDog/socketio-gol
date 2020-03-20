@@ -12,10 +12,12 @@ const socketIo = require('socket.io')
 const logger = require('./logger.js')
 const Game = require('./game.js')
 
-// Determinate configuration
+// Constants
 const MAX_HTTP_BUFFER_SIZE = 8192
 const DEFAULT_WORLD_WIDTH = 50
 const DEFAULT_WORLD_HEIGHT = 25
+
+// Determinate configuration
 const port = process.env.PORT || 3000
 
 // Module initialization
@@ -27,6 +29,7 @@ const io = socketIo(server, {
 })
 
 // Server data
+let connectedClientCount = 0
 let clientIdSequence = 1
 const game = new Game(DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT)
 
@@ -35,13 +38,11 @@ app.use(express.static(path.join(path.dirname(__dirname), 'public')))
 
 // Socket events
 io.on('connection', (socket) => {
-  // Assign client ID
-  const clientId = clientIdSequence
-  clientIdSequence++
-  logger.info(`Client ${clientId}: Connected with socket ID ${socket.id}`)
-
-  // Send world info
-  socket.emit('world info', game.getWorldInfo())
+  // Connection statistics
+  connectedClientCount++
+  socket.on('disconnect', () => {
+    connectedClientCount--
+  })
 
   // Game events
   socket.on('new cells', (data) => {
@@ -51,6 +52,14 @@ io.on('connection', (socket) => {
       posList: addedCells
     })
   })
+
+  // Assign client ID
+  const clientId = clientIdSequence
+  clientIdSequence++
+  logger.info(`Client ${clientId}: Connected with socket ID ${socket.id}, connected client: ${connectedClientCount}`)
+
+  // Send world info
+  socket.emit('world info', game.getWorldInfo())
 })
 
 // Start server
