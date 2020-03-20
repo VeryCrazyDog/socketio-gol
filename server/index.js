@@ -38,11 +38,24 @@ app.use(express.static(path.join(path.dirname(__dirname), 'public')))
 
 // Socket events
 io.on('connection', (socket) => {
-  // Connection statistics
+  // Update connection statistics
+  connectedClientCount++
+  // Assign client ID
+  const clientId = clientIdSequence
+  clientIdSequence++
+  logger.info(
+    `Client ${clientId}: Connected with socket ID ${socket.id},`,
+    `current connected client: ${connectedClientCount}`
+  )
+
+  // Send world info
+  socket.emit('world info', game.getWorldInfo())
+
+  // Connection handling
   socket.on('disconnect', () => {
     connectedClientCount--
+    logger.info(`Client ${clientId}: Disconnected, current connected client: ${connectedClientCount}`)
   })
-  connectedClientCount++
 
   // Game events
   socket.on('add cells', (data) => {
@@ -52,17 +65,9 @@ io.on('connection', (socket) => {
       posList: addedCells
     })
   })
-
-  // Assign client ID
-  const clientId = clientIdSequence
-  clientIdSequence++
-  logger.info(`Client ${clientId}: Connected with socket ID ${socket.id}, total connected client: ${connectedClientCount}`)
-
-  // Send world info
-  socket.emit('world info', game.getWorldInfo())
 })
 
 // Start server
 server.listen(port, () => {
-  logger.info(`Server ready at http://localhost:${port}`)
+  logger.info(`Server ready at http://localhost:${port} running mode ${process.env.NODE_ENV}`)
 })
