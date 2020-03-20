@@ -1,5 +1,5 @@
 {
-  "name": "conway",
+  "name": "socketio-gol",
   "main": "server/index.js",
   "dependencies": {
     "console-log-level": "^1.4.1",
