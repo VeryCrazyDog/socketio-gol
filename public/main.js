@@ -1,8 +1,8 @@
-function createWorld ({ width, height }) {
+function createWorld (size) {
   const $world = $('<table id="world" class="center fixed game">')
-  for (let r = 0; r < height; r++) {
+  for (let r = 0; r < size.height; r++) {
     const $tr = $('<tr>')
-    for (let c = 0; c < width; c++) {
+    for (let c = 0; c < size.width; c++) {
       $('<td></td>').appendTo($tr)
     }
     $tr.appendTo($world)
@@ -34,13 +34,13 @@ $(function () {
   let $world = $('#world')
 
   // Game world initialization
-  socket.on('world info', (data) => {
+  socket.on('world info', function (data) {
     const $newWorld = createWorld({ width: data.width, height: data.height })
     $world.replaceWith($newWorld)
     $world = $newWorld
     hookWorld($world, socket)
-    data.layout.forEach(row => {
-      row.forEach(cell => {
+    data.layout.forEach(function (row) {
+      row.forEach(function (cell) {
         // TODO Boundary check
         const $cell = $($world[0].rows[cell.y].cells[cell.x])
         if (cell.color) {
@@ -52,10 +52,10 @@ $(function () {
     })
   })
 
-  socket.on('new cells', (data) => {
-    data.posList.forEach(({ x, y }) => {
+  socket.on('new cells', function (data) {
+    data.posList.forEach(function (pos) {
       // TODO Cache jQuery object into variable
-      $($world[0].rows[y].cells[x]).addClass('alive')
+      $($world[0].rows[pos.y].cells[pos.x]).addClass('alive')
     })
   })
 })
