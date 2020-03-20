@@ -10,10 +10,10 @@ function createWorld (size) {
   return $world
 }
 
-function hookWorld ($world, socket) {
+function hookWorld (socket, $world) {
   $world.find('td').click(function () {
     $(this).addClass('alive')
-    socket.emit('new cells', {
+    socket.emit('add cells', {
       posList: [
         {
           x: this.cellIndex,
@@ -38,7 +38,6 @@ $(function () {
     const $newWorld = createWorld({ width: data.width, height: data.height })
     $world.replaceWith($newWorld)
     $world = $newWorld
-    hookWorld($world, socket)
     data.layout.forEach(function (row) {
       row.forEach(function (cell) {
         // TODO Boundary check
@@ -50,11 +49,12 @@ $(function () {
         }
       })
     })
+    hookWorld(socket, $world)
   })
 
   socket.on('new cells', function (data) {
     data.posList.forEach(function (pos) {
-      // TODO Cache jQuery object into variable
+      // TODO Implement setCellColor($world, x, y, color)
       $($world[0].rows[pos.y].cells[pos.x]).addClass('alive')
     })
   })

@@ -6,7 +6,7 @@ const logger = require('./logger.js')
 const CELL_TEMPLATE = {
   x: null,
   y: null,
-  color: false
+  color: null
 }
 
 class Game {

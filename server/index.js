@@ -39,14 +39,14 @@ app.use(express.static(path.join(path.dirname(__dirname), 'public')))
 // Socket events
 io.on('connection', (socket) => {
   // Connection statistics
-  connectedClientCount++
   socket.on('disconnect', () => {
     connectedClientCount--
   })
+  connectedClientCount++
 
   // Game events
-  socket.on('new cells', (data) => {
-    logger.debug(`Client ${clientId}: New cells at positions ${JSON.stringify(data.posList)}`)
+  socket.on('add cells', (data) => {
+    logger.debug(`Client ${clientId}: Add cells at positions ${JSON.stringify(data.posList)}`)
     const addedCells = game.addCells(data.posList)
     socket.broadcast.emit('new cells', {
       posList: addedCells
@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
   // Assign client ID
   const clientId = clientIdSequence
   clientIdSequence++
-  logger.info(`Client ${clientId}: Connected with socket ID ${socket.id}, connected client: ${connectedClientCount}`)
+  logger.info(`Client ${clientId}: Connected with socket ID ${socket.id}, total connected client: ${connectedClientCount}`)
 
   // Send world info
   socket.emit('world info', game.getWorldInfo())
