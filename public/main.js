@@ -34,11 +34,22 @@ $(function () {
   let $world = $('#world')
 
   // Game world initialization
-  socket.on('world size', (data) => {
-    const $newWorld = createWorld(data)
+  socket.on('world info', (data) => {
+    const $newWorld = createWorld({ width: data.width, height: data.height })
     $world.replaceWith($newWorld)
     $world = $newWorld
     hookWorld($world, socket)
+    data.layout.forEach(row => {
+      row.forEach(cell => {
+        // TODO Boundary check
+        const $cell = $($world[0].rows[cell.y].cells[cell.x])
+        if (cell.color) {
+          $cell.addClass('alive')
+        } else {
+          $cell.removeClass('alive')
+        }
+      })
+    })
   })
 
   socket.on('new cells', (data) => {

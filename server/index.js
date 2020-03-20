@@ -5,11 +5,11 @@ const path = require('path')
 const http = require('http')
 
 // Include 3rd party modules
-const consoleLogLevel = require('console-log-level')
 const express = require('express')
 const socketIo = require('socket.io')
 
 // Include our modules
+const logger = require('./logger.js')
 const Game = require('./game.js')
 
 // Determinate configuration
@@ -19,12 +19,6 @@ const DEFAULT_WORLD_HEIGHT = 25
 const port = process.env.PORT || 3000
 
 // Module initialization
-const logger = consoleLogLevel({
-  level: 'debug',
-  prefix: (level) => {
-    return `${new Date().toISOString()} [${level.toUpperCase()}]`
-  }
-})
 const app = express()
 const server = http.createServer(app)
 const io = socketIo(server, {
@@ -46,13 +40,16 @@ io.on('connection', (socket) => {
   clientIdSequence++
   logger.info(`Client ${clientId}: Connected with socket ID ${socket.id}`)
 
-  // Send world size
-  socket.emit('world size', game.getWorldSize())
+  // Send world info
+  socket.emit('world info', game.getWorldInfo())
 
   // Game events
   socket.on('new cells', (data) => {
     logger.debug(`Client ${clientId}: New cells at positions ${JSON.stringify(data.posList)}`)
-    socket.broadcast.emit('new cells', data)
+    const addedCells = game.addCells(data.posList)
+    socket.broadcast.emit('new cells', {
+      posList: addedCells
+    })
   })
 })
 
