@@ -9,8 +9,13 @@ const consoleLogLevel = require('console-log-level')
 const express = require('express')
 const socketIo = require('socket.io')
 
+// Include our modules
+const Game = require('./game.js')
+
 // Determinate configuration
 const MAX_HTTP_BUFFER_SIZE = 8192
+const DEFAULT_WORLD_WIDTH = 50
+const DEFAULT_WORLD_HEIGHT = 25
 const port = process.env.PORT || 3000
 
 // Module initialization
@@ -27,24 +32,27 @@ const io = socketIo(server, {
   cookie: false
 })
 
+// Server data
+let clientIdSequence = 1
+const game = new Game(DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT)
+
 // Routing setup
 app.use(express.static(path.join(path.dirname(__dirname), 'public')))
 
+// Socket events
 io.on('connection', (socket) => {
-  logger.info(`Client ${socket.id}: Connected`)
+  // Assign client ID
+  const clientId = clientIdSequence
+  clientIdSequence++
+  logger.info(`Client ${clientId}: Connected with socket ID ${socket.id}`)
 
-  socket.on('new cells', (dataStr) => {
-    let dataObj
-    try {
-      dataObj = JSON.parse(dataStr)
-    } catch (error) {
-      dataObj = null
-    }
-    if (dataObj !== null) {
-      const firstPos = dataObj.posList[0] || {}
-      logger.debug(`Client ${socket.id}: New cells at first position x=${firstPos.x}, y=${firstPos.y}`)
-      socket.broadcast.emit('new cells', dataStr)
-    }
+  // Send world size
+  socket.emit('world size', game.getWorldSize())
+
+  // Game events
+  socket.on('new cells', (data) => {
+    logger.debug(`Client ${clientId}: New cells at positions ${JSON.stringify(data.posList)}`)
+    socket.broadcast.emit('new cells', data)
   })
 })
 

@@ -1,40 +1,50 @@
-$(function () {
-  const rows = 50
-  const cols = 100
-
-  // Create socket
-  const socket = io()
-
-  // Game board initialization
-  const $board = $('<table id="board" class="center fixed game">')
-  for (let r = 0; r < rows; r++) {
+function createWorld ({ width, height }) {
+  const $world = $('<table id="world" class="center fixed game">')
+  for (let r = 0; r < height; r++) {
     const $tr = $('<tr>')
-    for (let c = 0; c < cols; c++) {
+    for (let c = 0; c < width; c++) {
       $('<td></td>').appendTo($tr)
     }
-    $tr.appendTo($board)
+    $tr.appendTo($world)
   }
-  $('#board').replaceWith($board)
+  return $world
+}
 
-  $board.find('td').click(function () {
+function hookWorld ($world, socket) {
+  $world.find('td').click(function () {
     $(this).addClass('alive')
-    socket.emit('new cells', JSON.stringify({
+    socket.emit('new cells', {
       posList: [
         {
           x: this.cellIndex,
           y: this.parentNode.rowIndex
         }
       ]
-    }))
+    })
     // TODO Remove console.log
     console.log('Clicked: ' + this.cellIndex + 'x' + this.parentNode.rowIndex)
   })
+}
 
-  socket.on('new cells', (dataStr) => {
-    const jsonObj = JSON.parse(dataStr)
-    jsonObj.posList.forEach(({ x, y }) => {
+$(function () {
+  // Create socket
+  const socket = io()
+
+  // jQuery objects
+  let $world = $('#world')
+
+  // Game world initialization
+  socket.on('world size', (data) => {
+    const $newWorld = createWorld(data)
+    $world.replaceWith($newWorld)
+    $world = $newWorld
+    hookWorld($world, socket)
+  })
+
+  socket.on('new cells', (data) => {
+    data.posList.forEach(({ x, y }) => {
       // TODO Cache jQuery object into variable
-      $($board[0].rows[y].cells[x]).addClass('alive')
+      $($world[0].rows[y].cells[x]).addClass('alive')
     })
   })
 })
