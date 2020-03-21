@@ -1,5 +1,8 @@
 'use strict'
 
+// Include 3rd party modules
+const randomColor = require('random-color')
+
 // Include our modules
 const logger = require('./logger.js')
 
@@ -34,7 +37,7 @@ function updateNextColor (cell, world) {
   if (cell.color === null) {
     if (nearByCellCount === 3) {
       // TODO Calculate the next color
-      cell.nextColor = true
+      cell.nextColor = randomColor()
     }
   } else {
     if (nearByCellCount === 2 || nearByCellCount === 3) {
@@ -71,11 +74,20 @@ class Game {
   }
 
   get worldInfo () {
-    // TODO Return a copy of layout
+    const cellList = []
+    this.layout.forEach(row => {
+      row.forEach(cell => {
+        cellList.push({
+          x: cell.x,
+          y: cell.y,
+          color: cell.color && cell.color.rgbString()
+        })
+      })
+    })
     return {
       xLength: this.xLen,
       yLength: this.yLen,
-      layout: this.layout
+      cellList
     }
   }
 
@@ -85,9 +97,8 @@ class Game {
       if (y in this.layout && x in this.layout[y]) {
         const cell = this.layout[y][x]
         if (cell.color === null) {
-          // TODO Replace with actual color rathar than boolean
-          cell.color = !!color
-          result.push({ x, y, color })
+          cell.color = color
+          result.push({ x, y, color: color.rgbString() })
         }
       } else {
         logger.warn(`Invalid new cell position ${JSON.stringify({ x, y })}`)

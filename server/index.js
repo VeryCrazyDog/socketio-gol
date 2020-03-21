@@ -7,6 +7,7 @@ const http = require('http')
 // Include 3rd party modules
 const express = require('express')
 const socketIo = require('socket.io')
+const randomColor = require('random-color')
 
 // Include our modules
 const logger = require('./logger.js')
@@ -45,17 +46,22 @@ io.on('connection', (socket) => {
   // Assign client ID and color
   const clientId = clientIdSequence
   clientIdSequence++
-  // TODO Implement random color
-  const clientColor = 'lightblue'
+  const clientColor = randomColor()
   logger.info(
     `Client ${clientId}: Connected,`,
-    `assigned color: ${clientColor},`,
+    `assigned color: ${clientColor.rgbString()},`,
     `socket ID ${socket.id},`,
     `current connected client: ${connectedClientCount}`
   )
 
-  // Send world info
-  socket.emit('world info', game.worldInfo)
+  // Send player and game info
+  socket.emit('game start info', {
+    player: {
+      id: clientId,
+      color: clientColor.rgbString()
+    },
+    world: game.worldInfo
+  })
 
   // Connection handling
   socket.on('disconnect', () => {
@@ -73,7 +79,7 @@ io.on('connection', (socket) => {
     logger.debug(`Client ${clientId}: Add cells at positions ${JSON.stringify(data.posList)}`)
     const addedCells = game.addCells(data.posList, clientColor)
     socket.broadcast.emit('new cells', {
-      posList: addedCells
+      cellList: addedCells
     })
   })
 
@@ -84,7 +90,7 @@ io.on('connection', (socket) => {
       logger.debug(`Updating game world to turn ${game.currentTurn + 1}`)
       game.nextWorld()
       io.emit('update world', {
-        layout: game.worldInfo.layout
+        cellList: game.worldInfo.cellList
       })
     }, DEFAULT_UPDATE_INTERVAL)
   }

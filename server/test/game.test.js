@@ -2,6 +2,7 @@
 
 // Include 3rd party modules
 const { expect } = require('chai')
+const randomColor = require('random-color')
 
 // Include module to test
 const Game = require('../game.js')
@@ -16,17 +17,15 @@ function verifyNextWorld (game, expectedOutput, newCells) {
     return accumulator
   }, [])
   if (newCells) {
-    game.addCells(newCells.map(([x, y]) => ({ x, y })), 'rgb(255,0,0)')
+    game.addCells(newCells.map(([x, y]) => ({ x, y })), randomColor())
   }
   game.nextWorld()
-  game.worldInfo.layout.forEach(row => {
-    row.forEach(cell => {
-      const expected = (outputLookup[cell.y] || [])[cell.x]
-      expect(
-        !!(cell.color) === !!expected,
-        `Cell at ${JSON.stringify({ x: cell.x, y: cell.y })}`
-      ).to.be.true
-    })
+  game.worldInfo.cellList.forEach(cell => {
+    const expected = (outputLookup[cell.y] || [])[cell.x]
+    expect(
+      !!(cell.color) === !!expected,
+      `Cell at ${JSON.stringify({ x: cell.x, y: cell.y })}`
+    ).to.be.true
   })
 }
 
@@ -37,24 +36,21 @@ describe('game.js', function () {
       const worldInfo = (new Game(1, 1)).worldInfo
       expect(worldInfo.xLength).to.equal(1)
       expect(worldInfo.yLength).to.equal(1)
-      expect(worldInfo.layout).to.have.lengthOf(1)
-      expect(worldInfo.layout[0]).to.have.lengthOf(1)
+      expect(worldInfo.cellList).to.have.lengthOf(1 * 1)
     })
 
     it('should create correct world size for 3x5', function () {
       const worldInfo = (new Game(3, 5)).worldInfo
       expect(worldInfo.xLength).to.equal(3)
       expect(worldInfo.yLength).to.equal(5)
-      expect(worldInfo.layout).to.have.lengthOf(5)
-      expect(worldInfo.layout[0]).to.have.lengthOf(3)
+      expect(worldInfo.cellList).to.have.lengthOf(3 * 5)
     })
 
     it('should create correct world size for 7x4', function () {
       const worldInfo = (new Game(7, 4)).worldInfo
       expect(worldInfo.xLength).to.equal(7)
       expect(worldInfo.yLength).to.equal(4)
-      expect(worldInfo.layout).to.have.lengthOf(4)
-      expect(worldInfo.layout[0]).to.have.lengthOf(7)
+      expect(worldInfo.cellList).to.have.lengthOf(7 * 4)
     })
   })
 
