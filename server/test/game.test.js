@@ -7,7 +7,7 @@ const { expect } = require('chai')
 const Game = require('../game.js')
 
 // Private functions
-function verifyNextWorld (game, input, expectedOutput) {
+function verifyNextWorld (game, expectedOutput, newCells) {
   const outputLookup = expectedOutput.reduce((accumulator, [x, y]) => {
     if (!(y in accumulator)) {
       accumulator[y] = []
@@ -15,8 +15,9 @@ function verifyNextWorld (game, input, expectedOutput) {
     accumulator[y][x] = true
     return accumulator
   }, [])
-
-  game.addCells(input.map(([x, y]) => ({ x, y })), 'rgb(255,0,0)')
+  if (newCells) {
+    game.addCells(newCells.map(([x, y]) => ({ x, y })), 'rgb(255,0,0)')
+  }
   game.nextWorld()
   game.worldInfo.layout.forEach(row => {
     row.forEach(cell => {
@@ -58,18 +59,107 @@ describe('game.js', function () {
   })
 
   describe('nextWorld()', function () {
-    it('should produce correct next world for blinker', function () {
-      const INPUT = [
-        [2, 1],
-        [2, 2],
-        [2, 3]
-      ]
-      const EXPECTED_OUTPUT = [
-        [1, 2],
-        [2, 2],
-        [3, 2]
-      ]
-      verifyNextWorld(new Game(5, 5), INPUT, EXPECTED_OUTPUT)
+    describe('still lifes', function () {
+      it('should produce unchanged next world for block', function () {
+        const INPUT = [
+          [1, 1],
+          [1, 2],
+          [2, 1],
+          [2, 2]
+        ]
+        verifyNextWorld(new Game(4, 4), INPUT, INPUT)
+      })
+      it('should produce unchanged next world for bee-hive', function () {
+        const INPUT = [
+          [2, 1],
+          [3, 1],
+          [1, 2],
+          [4, 2],
+          [2, 3],
+          [3, 3]
+        ]
+        verifyNextWorld(new Game(6, 5), INPUT, INPUT)
+      })
+      it('should produce unchanged next world for boat', function () {
+        const INPUT = [
+          [1, 1],
+          [2, 1],
+          [1, 2],
+          [3, 2],
+          [2, 3]
+        ]
+        verifyNextWorld(new Game(5, 5), INPUT, INPUT)
+      })
+      it('should produce unchanged next world for tub', function () {
+        const INPUT = [
+          [2, 1],
+          [1, 2],
+          [3, 2],
+          [2, 3]
+        ]
+        verifyNextWorld(new Game(5, 5), INPUT, INPUT)
+      })
+    })
+    describe('oscillators', function () {
+      it('should produce correct next world for blinker', function () {
+        const INPUT = [
+          [2, 1],
+          [2, 2],
+          [2, 3]
+        ]
+        const TURN_1 = [
+          [1, 2],
+          [2, 2],
+          [3, 2]
+        ]
+        const game = new Game(5, 5)
+        verifyNextWorld(game, TURN_1, INPUT)
+        verifyNextWorld(game, INPUT)
+      })
+      it('should produce correct next world for toad', function () {
+        const INPUT = [
+          [2, 2],
+          [3, 2],
+          [4, 2],
+          [1, 3],
+          [2, 3],
+          [3, 3]
+        ]
+        const TURN_1 = [
+          [3, 1],
+          [1, 2],
+          [4, 2],
+          [1, 3],
+          [4, 3],
+          [2, 4]
+        ]
+        const game = new Game(6, 6)
+        verifyNextWorld(game, TURN_1, INPUT)
+        verifyNextWorld(game, INPUT)
+      })
+      it('should produce correct next world for beacon', function () {
+        const INPUT = [
+          [1, 1],
+          [2, 1],
+          [1, 2],
+          [2, 2],
+          [3, 3],
+          [4, 3],
+          [3, 4],
+          [4, 4]
+        ]
+        const TURN_1 = [
+          [1, 1],
+          [2, 1],
+          [1, 2],
+          [4, 3],
+          [3, 4],
+          [4, 4]
+        ]
+        const game = new Game(6, 6)
+        verifyNextWorld(game, TURN_1, INPUT)
+        verifyNextWorld(game, INPUT)
+      })
     })
   })
 })
