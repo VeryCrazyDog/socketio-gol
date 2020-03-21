@@ -35,8 +35,17 @@ body {
 
 /* Header */
 h1 {
-  color: lightgray;
   text-align: center;
+}
+
+a {
+  color: lightgray;
+  text-decoration: none;
+}
+
+a:hover {
+  color: lightgoldenrodyellow;
+  text-decoration: underline;
 }
 
 /* Table grid */

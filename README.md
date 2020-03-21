@@ -1,6 +1,13 @@
 # Socket.IO Conway's Game of Life
 A [Socket.IO](https://socket.io/) demo implementing [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 
+A workable demo is hosted on https://socketio-gol.herokuapp.com/.
+
+
+## Features
+- Every player will be assigned with a random color.
+- World update only happens when there is at least one player connected.
+
 
 ## Prerequisite
 - Node.js 12.16.x
@@ -42,7 +49,12 @@ npm start
 Below are items which are currently missing and can be further enhanced.
 - Features
 	- World size configuration
-	- Adjustable next world interval
+	- Adjustable world update interval
+- UX
+	- Pause and resume of world update, so that player can add the cell pattern as they
+		wanted.
+	- Add game information to the screen, for example player color, number of connected players,
+		current number of turn of the world
 - Testing
 	- Implement pending test cases
 - Infrastructure
@@ -50,7 +62,7 @@ Below are items which are currently missing and can be further enhanced.
 - Security
 	- Validation on client-sent data
 - Optimizations
-	- Use of webpack
+	- Webpack browser side script
 
 
 ## License
@@ -58,4 +70,6 @@ This demo is licensed under the [MIT License](LICENSE).
 
 
 ## Acknowledge
-Source code `server/random-color.js` is created based on [random-color](https://www.npmjs.com/package/random-color).
+Source code `server/random-color.js` is written based on [random-color](https://www.npmjs.com/package/random-color).
+
+Favicon are taken from [Wikipedia](https://commons.wikimedia.org/wiki/File:Game_of_life_fpento.svg).
