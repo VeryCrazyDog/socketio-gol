@@ -23,7 +23,7 @@ const POS_OFFSET_LIST = [
 
 // Private functions
 function updateNextColor (cell, world) {
-  const nearByCellCount = POS_OFFSET_LIST.reduce((accumulator, { xOffset, yOffset }) => {
+  const nearByCellCount = POS_OFFSET_LIST.reduce((accumulator, [xOffset, yOffset]) => {
     const xCheck = cell.x + xOffset
     const yCheck = cell.y + yOffset
     if (yCheck in world && xCheck in world[yCheck] && world[yCheck][xCheck].color !== null) {
