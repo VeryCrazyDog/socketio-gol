@@ -25,6 +25,5 @@
     "fix": "standardx --verbose --fix || cd .",
     "test": "mocha ./server/test/*.test.js"
   },
-  "license": "UNLICENSED",
-  "private": true
+  "license": "MIT"
 }
