@@ -62,6 +62,7 @@ io.on('connection', (socket) => {
     connectedClientCount--
     logger.info(`Client ${clientId}: Disconnected, current connected client: ${connectedClientCount}`)
     if (connectedClientCount <= 0 && intervalUpdateId !== null) {
+      logger.info('Stopping interval update...')
       clearInterval(intervalUpdateId)
       intervalUpdateId = null
     }
@@ -78,6 +79,7 @@ io.on('connection', (socket) => {
 
   // Start interval update
   if (connectedClientCount > 0 && intervalUpdateId === null) {
+    logger.info(`Starting interval update with ${DEFAULT_UPDATE_INTERVAL / 1000} seconds interval...`)
     intervalUpdateId = setInterval(() => {
       logger.debug(`Updating game world to turn ${game.currentTurn + 1}`)
       game.nextWorld()
@@ -90,5 +92,9 @@ io.on('connection', (socket) => {
 
 // Start server
 server.listen(port, () => {
-  logger.info(`Server ready at http://localhost:${port} running in mode ${process.env.NODE_ENV}`)
+  logger.info(
+    `Server ready at http://localhost:${port}`,
+    `running in mode ${process.env.NODE_ENV}`,
+    `with log level ${logger.getLevelDescription()}`
+  )
 })
