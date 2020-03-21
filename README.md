@@ -1,11 +1,12 @@
 # Socket.IO Conway's Game of Life
-A [Socket.IO](https://socket.io/) demo implementing [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
+An interacive [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+which allow multiple players accessing the same world. It act as a [Socket.IO](https://socket.io/) demo.
 
 A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 
 
 ## Features
-- Every player will be assigned with a random color.
+- Allow multiple players accessing the same world. Every player will be assigned with a random color.
 - World update only happens when there is at least one player connected.
 - When new cell is produced, it's color will be a [color mix](https://github.com/Qix-/color/blob/a6fce8808b1845bfd38a6ccc5b9a369e010ada82/index.js#L366)
 	of all 3 cells around it.
@@ -15,7 +16,7 @@ A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 - Node.js 12.16.x
 
 
-## Install
+## Install dependency
 For local development, run the following command.
 ```
 npm install
@@ -24,6 +25,13 @@ npm install
 For production hosting, run the following command.
 ```
 npm install --only=production
+```
+
+
+## Test
+After installed dependency for local development, run the following command.
+```
+npm test
 ```
 
 
