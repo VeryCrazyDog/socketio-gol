@@ -16,7 +16,7 @@
     "start": "nodemon --ignore ./public/ ./server/index.js",
     "lint": "standardx --verbose || cd .",
     "fix": "standardx --verbose --fix || cd .",
-    "test": "mocha"
+    "test": "mocha ./server/test/*.test.js"
   },
   "license": "UNLICENSED",
   "private": true
