@@ -58,4 +58,18 @@ $(function () {
       $($world[0].rows[pos.y].cells[pos.x]).addClass('alive')
     })
   })
+
+  socket.on('update world', function (data) {
+    data.layout.forEach(function (row) {
+      row.forEach(function (cell) {
+        // TODO Boundary check
+        const $cell = $($world[0].rows[cell.y].cells[cell.x])
+        if (cell.color) {
+          $cell.addClass('alive')
+        } else {
+          $cell.removeClass('alive')
+        }
+      })
+    })
+  })
 })

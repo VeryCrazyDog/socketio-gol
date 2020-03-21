@@ -3,14 +3,52 @@
 // Include our modules
 const logger = require('./logger.js')
 
+// Constants
 const CELL_TEMPLATE = {
   x: null,
   y: null,
-  color: null
+  color: null,
+  nextColor: null
+}
+const POS_OFFSET_LIST = [
+  [-1, -1],
+  [0, -1],
+  [1, -1],
+  [-1, 0],
+  [1, 0],
+  [-1, 1],
+  [0, 1],
+  [1, 1]
+]
+
+// Private functions
+function updateNextColor (cell, world) {
+  const nearByCellCount = POS_OFFSET_LIST.reduce((accumulator, { xOffset, yOffset }) => {
+    const xCheck = cell.x + xOffset
+    const yCheck = cell.y + yOffset
+    if (yCheck in world && xCheck in world[yCheck] && world[yCheck][xCheck].color !== null) {
+      accumulator++
+    }
+    return accumulator
+  }, 0)
+  if (cell.color === null) {
+    if (nearByCellCount === 3) {
+      // TODO Calculate the next color
+      cell.nextColor = true
+    }
+  } else {
+    if (nearByCellCount === 2 || nearByCellCount === 3) {
+      cell.nextColor = cell.color
+    } else {
+      cell.nextColor = null
+    }
+  }
 }
 
+// Class to export
 class Game {
   constructor (worldWidth, worldHeight) {
+    this.turn = 0
     this.xLen = worldWidth
     this.yLen = worldHeight
     const layout = []
@@ -28,7 +66,12 @@ class Game {
     this.layout = layout
   }
 
+  get currentTurn () {
+    return this.turn + 1
+  }
+
   get worldInfo () {
+    // TODO Return a copy of layout
     return {
       width: this.xLen,
       height: this.yLen,
@@ -39,12 +82,12 @@ class Game {
   addCells (posList, color) {
     const result = []
     posList.forEach(({ x, y }) => {
-      if (x >= 0 && x < this.xLen && y >= 0 && y <= this.yLen) {
+      if (y in this.layout && x in this.layout[y]) {
         const cell = this.layout[y][x]
         if (cell.color === null) {
           // TODO Replace with actual color rathar than boolean
           cell.color = !!color
-          result.push({ x, y })
+          result.push({ x, y, color })
         }
       } else {
         logger.warn(`Invalid new cell position ${JSON.stringify({ x, y })}`)
@@ -54,7 +97,18 @@ class Game {
   }
 
   nextWorld () {
-
+    this.layout.forEach(row => {
+      row.forEach(cell => {
+        updateNextColor(cell, this.layout)
+      })
+    })
+    this.layout.forEach(row => {
+      row.forEach(cell => {
+        cell.color = cell.nextColor
+        cell.nextColor = null
+      })
+    })
+    this.turn++
   }
 }
 

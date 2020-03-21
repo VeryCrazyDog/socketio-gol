@@ -16,6 +16,7 @@ const Game = require('./game.js')
 const MAX_HTTP_BUFFER_SIZE = 8192
 const DEFAULT_WORLD_WIDTH = 50
 const DEFAULT_WORLD_HEIGHT = 25
+const DEFAULT_UPDATE_INTERVAL = 3000
 
 // Determinate configuration
 const port = process.env.PORT || 3000
@@ -32,6 +33,7 @@ const io = socketIo(server, {
 let connectedClientCount = 0
 let clientIdSequence = 1
 const game = new Game(DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT)
+let intervalUpdateId = null
 
 // Routing setup
 app.use(express.static(path.join(path.dirname(__dirname), 'public')))
@@ -59,6 +61,10 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     connectedClientCount--
     logger.info(`Client ${clientId}: Disconnected, current connected client: ${connectedClientCount}`)
+    if (connectedClientCount <= 0 && intervalUpdateId !== null) {
+      clearInterval(intervalUpdateId)
+      intervalUpdateId = null
+    }
   })
 
   // Game events
@@ -69,6 +75,17 @@ io.on('connection', (socket) => {
       posList: addedCells
     })
   })
+
+  // Start interval update
+  if (connectedClientCount > 0 && intervalUpdateId === null) {
+    intervalUpdateId = setInterval(() => {
+      logger.debug(`Updating game world to turn ${game.currentTurn + 1}`)
+      game.nextWorld()
+      io.emit('update world', {
+        layout: game.worldInfo.layout
+      })
+    }, DEFAULT_UPDATE_INTERVAL)
+  }
 })
 
 // Start server
