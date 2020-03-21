@@ -25,3 +25,4 @@ supplying the `PORT` environment variable.
 ## TODO
 - SSL support
 - Webpack
+- Client request data validation

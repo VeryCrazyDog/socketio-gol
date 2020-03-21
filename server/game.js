@@ -28,7 +28,7 @@ class Game {
     this.layout = layout
   }
 
-  getWorldInfo () {
+  get worldInfo () {
     return {
       width: this.xLen,
       height: this.yLen,
@@ -36,17 +36,25 @@ class Game {
     }
   }
 
-  addCells (posList) {
+  addCells (posList, color) {
     const result = []
     posList.forEach(({ x, y }) => {
       if (x >= 0 && x < this.xLen && y >= 0 && y <= this.yLen) {
-        this.layout[y][x].color = true
-        result.push({ x, y })
+        const cell = this.layout[y][x]
+        if (cell.color === null) {
+          // TODO Replace with actual color rathar than boolean
+          cell.color = !!color
+          result.push({ x, y })
+        }
       } else {
         logger.warn(`Invalid new cell position ${JSON.stringify({ x, y })}`)
       }
     })
     return result
+  }
+
+  nextWorld () {
+
   }
 }
 

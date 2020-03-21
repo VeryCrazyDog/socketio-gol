@@ -40,16 +40,20 @@ app.use(express.static(path.join(path.dirname(__dirname), 'public')))
 io.on('connection', (socket) => {
   // Update connection statistics
   connectedClientCount++
-  // Assign client ID
+  // Assign client ID and color
   const clientId = clientIdSequence
   clientIdSequence++
+  // TODO Implement random color
+  const clientColor = 'lightblue'
   logger.info(
-    `Client ${clientId}: Connected with socket ID ${socket.id},`,
+    `Client ${clientId}: Connected,`,
+    `assigned color: ${clientColor},`,
+    `socket ID ${socket.id},`,
     `current connected client: ${connectedClientCount}`
   )
 
   // Send world info
-  socket.emit('world info', game.getWorldInfo())
+  socket.emit('world info', game.worldInfo)
 
   // Connection handling
   socket.on('disconnect', () => {
@@ -60,7 +64,7 @@ io.on('connection', (socket) => {
   // Game events
   socket.on('add cells', (data) => {
     logger.debug(`Client ${clientId}: Add cells at positions ${JSON.stringify(data.posList)}`)
-    const addedCells = game.addCells(data.posList)
+    const addedCells = game.addCells(data.posList, clientColor)
     socket.broadcast.emit('new cells', {
       posList: addedCells
     })
@@ -69,5 +73,5 @@ io.on('connection', (socket) => {
 
 // Start server
 server.listen(port, () => {
-  logger.info(`Server ready at http://localhost:${port} running mode ${process.env.NODE_ENV}`)
+  logger.info(`Server ready at http://localhost:${port} running in mode ${process.env.NODE_ENV}`)
 })
