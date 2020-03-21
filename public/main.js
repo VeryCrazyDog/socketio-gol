@@ -66,6 +66,7 @@ $(function () {
     hookWorld($world, socket, data.player.color)
   })
 
+  // Game events
   socket.on('new cells', function (data) {
     data.cellList.forEach(function (cell) {
       setCellColorByPos($world, cell.x, cell.y, cell.color)

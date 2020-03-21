@@ -15,8 +15,8 @@ const Game = require('./game.js')
 
 // Constants
 const MAX_HTTP_BUFFER_SIZE = 8192
-const DEFAULT_WORLD_XLENGTH = 50
-const DEFAULT_WORLD_YLENGTH = 25
+const DEFAULT_WORLD_XLENGTH = 45
+const DEFAULT_WORLD_YLENGTH = 30
 const DEFAULT_UPDATE_INTERVAL = 2000
 
 // Determinate configuration

@@ -26,6 +26,7 @@ html, body {
 
 html {
   background-color: #1e1e1e;
+  color: lightgray;
   padding: 0 2px 2px 2px;
 }
 
@@ -48,7 +49,40 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Table grid */
+/* Sidebar */
+.sidebar {
+  background-color: #111;
+  height: 100%;
+  overflow-x: hidden;
+  padding: 10px 0;
+  position: fixed;
+  width: 96px;
+  z-index: 1;
+}
+
+.sidebar.left {
+  left: 0;
+  top: 0;
+}
+
+.sidebar.right {
+  right: 0;
+  top: 0;
+}
+
+.sidebar table, p {
+  margin: 10px;
+}
+
+.sidebar p {
+  text-align: center;
+}
+
+.main {
+  margin: 0 98px;
+}
+
+/* Table */
 table, th, td {
   border: 1px solid gray;
   border-collapse: collapse;
@@ -71,4 +105,8 @@ table.game:hover {
 table.game td {
   height: 15px;
   width: 15px;
+}
+
+table.game td.alive {
+  background-color: lightblue;
 }
