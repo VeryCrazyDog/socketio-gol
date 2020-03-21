@@ -1,7 +1,9 @@
 $(function () {
+  // Constants
   const KEY_IS_COLOR_SET = 'IS_ALIVE'
   const KEY_POS_OFFSET_LIST = 'POS_OFFSET_LIST'
 
+  // Functions
   function createWorld (size, id) {
     const $world = $('<table class="center fixed game selectable">')
     if (id) {

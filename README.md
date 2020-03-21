@@ -1,6 +1,8 @@
 # Socket.IO Conway's Game of Life
 An interacive [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
-which allow multiple players accessing the same world. It act as a [Socket.IO](https://socket.io/) demo.
+[Socket.IO](https://socket.io/) demo which allow multiple players accessing the same world.
+Socket IO is used because WebSocket protocol is best suitable for real-time application
+which requires low latency and bi-direction communication.
 
 A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 
@@ -47,12 +49,16 @@ To run in production mode, run the following command.
 npm start
 ```
 
+This web application is ready for Heroku deployment by simply perform Git push to Heroku.
+
 
 ## Accepted environment variables
 - `PORT`: The port that this web application will listen to, default is `3000`.
 - `NODE_ENV`: The node environment that this web application will be running in. Possible
 	values are `development` and `production`. Default is `undefined` which is equal
 	to `development`.
+- `LOG_LEVEL`: The log level of this web application. Default is `DEBUG`. Possible
+	values are `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR` and `SILENT`.
 
 
 ## Known issues
@@ -69,8 +75,8 @@ Below are items which are currently missing and can be further enhanced.
 - UX
 	- Pause and resume of world update, so that player can add the cell pattern as they
 		wanted.
-	- Add game information to the screen, for example player color, number of connected players,
-		current number of turn of the world
+	- Add game information to the screen, for example number of connected players,
+		current number of turn of the world.
 - Testing
 	- Implement pending test cases
 - Infrastructure
@@ -79,6 +85,7 @@ Below are items which are currently missing and can be further enhanced.
 	- Validation on client-sent data
 - Optimizations
 	- Webpack browser side script
+	- Set up common library which implement common game logic for use in both web browser and server side
 
 
 ## License

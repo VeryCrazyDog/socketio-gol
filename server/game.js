@@ -84,7 +84,7 @@ class Game {
   }
 
   get currentTurn () {
-    return this.turn + 1
+    return this.turn
   }
 
   get worldInfo () {

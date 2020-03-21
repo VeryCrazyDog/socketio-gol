@@ -19,7 +19,7 @@ const DEFAULT_WORLD_XLENGTH = 45
 const DEFAULT_WORLD_YLENGTH = 30
 const DEFAULT_UPDATE_INTERVAL = 1000
 
-// Determinate configuration
+// Determinate effective configuration
 const port = process.env.PORT || 3000
 
 // Module initialization
