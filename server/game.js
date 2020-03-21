@@ -2,7 +2,6 @@
 
 // Include our modules
 const logger = require('./logger.js')
-const randomColor = require('./random-color.js')
 
 // Constants
 const CELL_TEMPLATE = {
@@ -23,19 +22,36 @@ const POS_OFFSET_LIST = [
 ]
 
 // Private functions
+function getCellColorByRelPos (world, { x, y }, [xOffset, yOffset]) {
+  const xNew = x + xOffset
+  const yNew = y + yOffset
+  let result = null
+  if (yNew in world && xNew in world[yNew]) {
+    result = world[yNew][xNew].color
+  }
+  return result
+}
+
 function updateNextColor (cell, world) {
-  const nearByCellCount = POS_OFFSET_LIST.reduce((accumulator, [xOffset, yOffset]) => {
-    const xCheck = cell.x + xOffset
-    const yCheck = cell.y + yOffset
-    if (yCheck in world && xCheck in world[yCheck] && world[yCheck][xCheck].color !== null) {
+  const nearByCellCount = POS_OFFSET_LIST.reduce((accumulator, offset) => {
+    if (getCellColorByRelPos(world, cell, offset) !== null) {
       accumulator++
     }
     return accumulator
   }, 0)
   if (cell.color === null) {
     if (nearByCellCount === 3) {
-      // TODO Calculate the next color
-      cell.nextColor = randomColor()
+      cell.nextColor = POS_OFFSET_LIST.reduce((accumulator, offset) => {
+        const color = getCellColorByRelPos(world, cell, offset)
+        if (color !== null) {
+          if (accumulator !== null) {
+            accumulator = accumulator.mix(color)
+          } else {
+            accumulator = color
+          }
+        }
+        return accumulator
+      }, null)
     }
   } else {
     if (nearByCellCount === 2 || nearByCellCount === 3) {

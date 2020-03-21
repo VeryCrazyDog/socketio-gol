@@ -67,6 +67,7 @@ describe('game.js', function () {
         ]
         verifyNextWorld(new Game(4, 4), INPUT, INPUT)
       })
+
       it('should produce unchanged next world for bee-hive', function () {
         const INPUT = [
           [2, 1],
@@ -78,6 +79,7 @@ describe('game.js', function () {
         ]
         verifyNextWorld(new Game(6, 5), INPUT, INPUT)
       })
+
       it('should produce unchanged next world for boat', function () {
         const INPUT = [
           [1, 1],
@@ -88,6 +90,7 @@ describe('game.js', function () {
         ]
         verifyNextWorld(new Game(5, 5), INPUT, INPUT)
       })
+
       it('should produce unchanged next world for tub', function () {
         const INPUT = [
           [2, 1],
@@ -98,6 +101,7 @@ describe('game.js', function () {
         verifyNextWorld(new Game(5, 5), INPUT, INPUT)
       })
     })
+
     describe('oscillators', function () {
       it('should produce correct next world for blinker', function () {
         const INPUT = [
@@ -114,6 +118,7 @@ describe('game.js', function () {
         verifyNextWorld(game, TURN_1, INPUT)
         verifyNextWorld(game, INPUT)
       })
+
       it('should produce correct next world for toad', function () {
         const INPUT = [
           [2, 2],
@@ -135,6 +140,7 @@ describe('game.js', function () {
         verifyNextWorld(game, TURN_1, INPUT)
         verifyNextWorld(game, INPUT)
       })
+
       it('should produce correct next world for beacon', function () {
         const INPUT = [
           [1, 1],
@@ -159,6 +165,7 @@ describe('game.js', function () {
         verifyNextWorld(game, INPUT)
       })
     })
+
     describe('border cases', function () {
       it('should produce correct next world for blinker', function () {
         const INPUT = [
@@ -175,6 +182,11 @@ describe('game.js', function () {
         verifyNextWorld(game, TURN_1, INPUT)
         verifyNextWorld(game, INPUT)
       })
+    })
+
+    describe('mix color', function () {
+      // TOOD Implement
+      it('should produce correct cell color in next world for blinker')
     })
   })
 })
