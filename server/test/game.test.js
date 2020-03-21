@@ -2,7 +2,9 @@
 
 // Include 3rd party modules
 const { expect } = require('chai')
-const randomColor = require('random-color')
+
+// Include our modules
+const randomColor = require('../random-color.js')
 
 // Include module to test
 const Game = require('../game.js')

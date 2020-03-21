@@ -1,10 +1,8 @@
 'use strict'
 
-// Include 3rd party modules
-const randomColor = require('random-color')
-
 // Include our modules
 const logger = require('./logger.js')
+const randomColor = require('./random-color.js')
 
 // Constants
 const CELL_TEMPLATE = {
@@ -80,7 +78,7 @@ class Game {
         cellList.push({
           x: cell.x,
           y: cell.y,
-          color: cell.color && cell.color.rgbString()
+          color: cell.color && cell.color.string()
         })
       })
     })
@@ -98,7 +96,7 @@ class Game {
         const cell = this.layout[y][x]
         if (cell.color === null) {
           cell.color = color
-          result.push({ x, y, color: color.rgbString() })
+          result.push({ x, y, color: color.string() })
         }
       } else {
         logger.warn(`Invalid new cell position ${JSON.stringify({ x, y })}`)

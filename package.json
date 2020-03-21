@@ -5,11 +5,11 @@
     "node": "12.16.x"
   },
   "dependencies": {
+    "color": "^3.1.2",
     "express": "^4.17.1",
     "loglevel": "^1.6.7",
     "loglevel-plugin-prefix": "^0.8.4",
     "pm2": "^4.2.3",
-    "random-color": "^1.0.1",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {

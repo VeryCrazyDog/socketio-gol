@@ -26,3 +26,7 @@ supplying the `PORT` environment variable.
 - SSL support
 - Webpack
 - Client request data validation
+
+
+## Acknowledge
+`server/random-color.js` is created based on [random-color](https://www.npmjs.com/package/random-color).

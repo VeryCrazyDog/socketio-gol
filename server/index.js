@@ -7,10 +7,10 @@ const http = require('http')
 // Include 3rd party modules
 const express = require('express')
 const socketIo = require('socket.io')
-const randomColor = require('random-color')
 
 // Include our modules
 const logger = require('./logger.js')
+const randomColor = require('./random-color.js')
 const Game = require('./game.js')
 
 // Constants
@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
   const clientColor = randomColor()
   logger.info(
     `Client ${clientId}: Connected,`,
-    `assigned color: ${clientColor.rgbString()},`,
+    `assigned color: ${clientColor.string()},`,
     `socket ID ${socket.id},`,
     `current connected client: ${connectedClientCount}`
   )
@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
   socket.emit('game start info', {
     player: {
       id: clientId,
-      color: clientColor.rgbString()
+      color: clientColor.string()
     },
     world: game.worldInfo
   })
