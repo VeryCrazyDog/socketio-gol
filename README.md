@@ -43,12 +43,18 @@ Below are items which are currently missing and can be further enhanced.
 - Features
 	- World size configuration
 	- Adjustable next world interval
+- Testing
+	- Implement pending test cases
 - Infrastructure
 	- HTTPS support
 - Security
 	- Validation on client-sent data
 - Optimizations
 	- Use of webpack
+
+
+## License
+This demo is licensed under the [MIT License](LICENSE).
 
 
 ## Acknowledge
