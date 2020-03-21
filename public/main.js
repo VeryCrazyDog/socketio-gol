@@ -21,29 +21,32 @@ $(function () {
     return !!$cell.data(KEY_IS_COLOR_SET)
   }
 
-  function setCellColor ($cell, color) {
-    $cell.css('background-color', color !== null ? color : '')
-    $cell.data(KEY_IS_COLOR_SET, color !== null)
-  }
-
-  function setCellColorByPos ($world, x, y, color) {
-    if (y in $world[0].rows && x in $world[0].rows[y].cells) {
-      setCellColor($($world[0].rows[y].cells[x]), color)
+  function setCellColor ($cell, color, overwrite) {
+    if (overwrite || !isCellColorSet($cell)) {
+      $cell.css('background-color', color !== null ? color : '')
+      $cell.data(KEY_IS_COLOR_SET, color !== null)
     }
   }
 
-  function updateWorld ($world, cellList) {
+  function setCellColorByPos ($world, x, y, color, overwrite) {
+    if (y in $world[0].rows && x in $world[0].rows[y].cells) {
+      setCellColor($($world[0].rows[y].cells[x]), color, overwrite)
+    }
+  }
+
+  function updateWorld ($world, cellList, options) {
+    options = options || {}
     cellList.forEach(function (cell) {
-      setCellColorByPos($world, cell.x, cell.y, cell.color)
+      setCellColorByPos($world, cell.x, cell.y, options.color || cell.color, options.overwrite)
     })
   }
 
   function addToolboxItem (size, posList, $leftBar, isSelected) {
     const $result = createWorld(size)
-    posList.forEach(function (cell) {
-      cell.color = 'lightblue'
+    updateWorld($result, posList, {
+      overwrite: true,
+      color: 'lightblue'
     })
-    updateWorld($result, posList)
     if (isSelected) {
       $result.addClass('selected')
     }
@@ -64,7 +67,7 @@ $(function () {
     })
   }
 
-  function hookWorld ($world, socket) {
+  function hookWorld ($world, socket, playerColor) {
     $world.find('td').click(function () {
       const clickedX = this.cellIndex
       const clickedY = this.parentNode.rowIndex
@@ -73,7 +76,6 @@ $(function () {
       if (!offsetList) {
         offsetList = { x: 0, y: 0 }
       }
-
       const posList = offsetList.map(function (offset) {
         return {
           x: clickedX + offset.x,
@@ -81,20 +83,9 @@ $(function () {
         }
       })
 
-      // TODO Move this implementation to setCellColor
-      // if (!isCellColorSet($this)) {
-      //   setCellColor($this, color)
-      //   socket.emit('add cells', {
-      //     posList: [
-      //       {
-      //         x: this.cellIndex,
-      //         y: this.parentNode.rowIndex
-      //       }
-      //     ]
-      //   })
-      // }
+      updateWorld($world, posList, { color: playerColor })
       socket.emit('add cells', {
-        posList
+        posList: posList
       })
     })
   }
@@ -135,18 +126,18 @@ $(function () {
     const $newWorld = createWorld({ x: data.world.xLength, y: data.world.yLength }, 'world')
     $world.replaceWith($newWorld)
     $world = $newWorld
-    updateWorld($world, data.world.cellList)
+    updateWorld($world, data.world.cellList, { overwrite: true })
     hookWorld($world, socket, data.player.color)
   })
 
   // Game events
   socket.on('new cells', function (data) {
     data.cellList.forEach(function (cell) {
-      setCellColorByPos($world, cell.x, cell.y, cell.color)
+      setCellColorByPos($world, cell.x, cell.y, cell.color, true)
     })
   })
 
   socket.on('update world', function (data) {
-    updateWorld($world, data.cellList)
+    updateWorld($world, data.cellList, { overwrite: true })
   })
 })
