@@ -1,4 +1,5 @@
 const KEY_IS_COLOR_SET = 'IS_ALIVE'
+const KEY_POS_OFFSET_LIST = 'POS_OFFSET_LIST'
 
 function createWorld (size, id) {
   const $world = $('<table class="center fixed game">')
@@ -36,16 +37,25 @@ function updateWorld ($world, cellList) {
   })
 }
 
-function addToolboxItem (size, cellList, $leftBar, isSelected) {
+function addToolboxItem (size, posList, $leftBar, isSelected) {
   const $result = createWorld(size)
-  cellList.forEach(function (cell) {
+  posList.forEach(function (cell) {
     cell.color = 'lightblue'
   })
-  updateWorld($result, cellList)
+  updateWorld($result, posList)
   if (isSelected) {
     $result.addClass('selected')
   }
   $result.appendTo($leftBar)
+
+  const centerX = ~~(size.x / 2)
+  const centerY = ~~(size.y / 2)
+  $result.data(KEY_POS_OFFSET_LIST, posList.map(function (pos) {
+    return {
+      x: pos.x - centerX,
+      y: pos.y - centerY
+    }
+  }))
 
   $result.click(function () {
     $leftBar.find('table').removeClass('selected')
@@ -53,20 +63,38 @@ function addToolboxItem (size, cellList, $leftBar, isSelected) {
   })
 }
 
-function hookWorld ($world, socket, color) {
+function hookWorld ($world, socket) {
   $world.find('td').click(function () {
-    const $this = $(this)
-    if (!isCellColorSet($this)) {
-      setCellColor($this, color)
-      socket.emit('add cells', {
-        posList: [
-          {
-            x: this.cellIndex,
-            y: this.parentNode.rowIndex
-          }
-        ]
-      })
+    const clickedX = this.cellIndex
+    const clickedY = this.parentNode.rowIndex
+
+    let offsetList = $('#leftbar table.selected').data(KEY_POS_OFFSET_LIST)
+    if (!offsetList) {
+      offsetList = { x: 0, y: 0 }
     }
+
+    const posList = offsetList.map(function (offset) {
+      return {
+        x: clickedX + offset.x,
+        y: clickedY + offset.y
+      }
+    })
+
+    // TODO Move this implementation to setCellColor
+    // if (!isCellColorSet($this)) {
+    //   setCellColor($this, color)
+    //   socket.emit('add cells', {
+    //     posList: [
+    //       {
+    //         x: this.cellIndex,
+    //         y: this.parentNode.rowIndex
+    //       }
+    //     ]
+    //   })
+    // }
+    socket.emit('add cells', {
+      posList
+    })
   })
 }
 
