@@ -47,11 +47,17 @@ npm start
 	to `development`.
 
 
+## Known issues
+- When player add cells to the world, it is possible that those new cells disappeared
+	for a short period of time because the world is updated before those new cells arrived to server.
+
+
 ## TODO
 Below are items which are currently missing and can be further enhanced.
 - Features
 	- World size configuration
 	- Adjustable world update interval
+	- World reset button
 - UX
 	- Pause and resume of world update, so that player can add the cell pattern as they
 		wanted.

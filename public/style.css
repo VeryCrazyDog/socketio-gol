@@ -98,7 +98,7 @@ table.fixed {
   width: max-content;
 }
 
-table.game:hover {
+table.selectable:hover {
   cursor: pointer;
 }
 

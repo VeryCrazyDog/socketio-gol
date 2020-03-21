@@ -3,7 +3,7 @@ $(function () {
   const KEY_POS_OFFSET_LIST = 'POS_OFFSET_LIST'
 
   function createWorld (size, id) {
-    const $world = $('<table class="center fixed game">')
+    const $world = $('<table class="center fixed game selectable">')
     if (id) {
       $world.attr('id', id)
     }
@@ -83,10 +83,10 @@ $(function () {
         }
       })
 
-      updateWorld($world, posList, { color: playerColor })
       socket.emit('add cells', {
         posList: posList
       })
+      updateWorld($world, posList, { color: playerColor })
     })
   }
 
