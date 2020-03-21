@@ -161,5 +161,22 @@ describe('game.js', function () {
         verifyNextWorld(game, INPUT)
       })
     })
+    describe('border cases', function () {
+      it('should produce correct next world for blinker', function () {
+        const INPUT = [
+          [1, 0],
+          [1, 1],
+          [1, 2]
+        ]
+        const TURN_1 = [
+          [0, 1],
+          [1, 1],
+          [2, 1]
+        ]
+        const game = new Game(3, 3)
+        verifyNextWorld(game, TURN_1, INPUT)
+        verifyNextWorld(game, INPUT)
+      })
+    })
   })
 })
