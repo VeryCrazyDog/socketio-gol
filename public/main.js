@@ -1,8 +1,8 @@
 function createWorld (size) {
   const $world = $('<table id="world" class="center fixed game">')
-  for (let r = 0; r < size.height; r++) {
+  for (let r = 0; r < size.y; r++) {
     const $tr = $('<tr>')
-    for (let c = 0; c < size.width; c++) {
+    for (let c = 0; c < size.x; c++) {
       $('<td></td>').appendTo($tr)
     }
     $tr.appendTo($world)
@@ -35,7 +35,7 @@ $(function () {
 
   // Game world initialization
   socket.on('world info', function (data) {
-    const $newWorld = createWorld({ width: data.width, height: data.height })
+    const $newWorld = createWorld({ x: data.xLength, y: data.yLength })
     $world.replaceWith($newWorld)
     $world = $newWorld
     data.layout.forEach(function (row) {

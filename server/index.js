@@ -14,8 +14,8 @@ const Game = require('./game.js')
 
 // Constants
 const MAX_HTTP_BUFFER_SIZE = 8192
-const DEFAULT_WORLD_WIDTH = 50
-const DEFAULT_WORLD_HEIGHT = 25
+const DEFAULT_WORLD_XLENGTH = 50
+const DEFAULT_WORLD_YLENGTH = 25
 const DEFAULT_UPDATE_INTERVAL = 3000
 
 // Determinate configuration
@@ -32,7 +32,7 @@ const io = socketIo(server, {
 // Server data
 let connectedClientCount = 0
 let clientIdSequence = 1
-const game = new Game(DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT)
+const game = new Game(DEFAULT_WORLD_XLENGTH, DEFAULT_WORLD_YLENGTH)
 let intervalUpdateId = null
 
 // Routing setup

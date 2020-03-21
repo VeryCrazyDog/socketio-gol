@@ -47,14 +47,14 @@ function updateNextColor (cell, world) {
 
 // Class to export
 class Game {
-  constructor (worldWidth, worldHeight) {
+  constructor (xLength, yLength) {
     this.turn = 0
-    this.xLen = worldWidth
-    this.yLen = worldHeight
+    this.xLen = xLength
+    this.yLen = yLength
     const layout = []
-    for (let y = 0; y < worldHeight; y++) {
+    for (let y = 0; y < yLength; y++) {
       const row = []
-      for (let x = 0; x < worldWidth; x++) {
+      for (let x = 0; x < xLength; x++) {
         row.push({
           ...CELL_TEMPLATE,
           x,
@@ -73,8 +73,8 @@ class Game {
   get worldInfo () {
     // TODO Return a copy of layout
     return {
-      width: this.xLen,
-      height: this.yLen,
+      xLength: this.xLen,
+      yLength: this.yLen,
       layout: this.layout
     }
   }
