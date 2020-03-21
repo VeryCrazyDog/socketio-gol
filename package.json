@@ -1,9 +1,13 @@
 {
   "name": "socketio-gol",
   "main": "server/index.js",
+  "engines": {
+    "node": "12.16.x"
+  },
   "dependencies": {
     "console-log-level": "^1.4.1",
     "express": "^4.17.1",
+    "pm2": "^4.2.3",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
@@ -13,7 +17,8 @@
     "standardx": "^5.0.0"
   },
   "scripts": {
-    "start": "nodemon --ignore ./public/ ./server/index.js",
+    "start": "pm2-runtime start pm2.json --env production",
+    "nodemon": "nodemon --ignore ./public/ ./server/index.js",
     "lint": "standardx --verbose || cd .",
     "fix": "standardx --verbose --fix || cd .",
     "test": "mocha ./server/test/*.test.js"
