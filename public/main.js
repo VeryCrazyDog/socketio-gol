@@ -1,7 +1,10 @@
 const KEY_IS_COLOR_SET = 'IS_ALIVE'
 
-function createWorld (size) {
-  const $world = $('<table id="world" class="center fixed game">')
+function createWorld (size, id) {
+  const $world = $('<table class="center fixed game">')
+  if (id) {
+    $world.attr('id', id)
+  }
   for (let r = 0; r < size.y; r++) {
     const $tr = $('<tr>')
     for (let c = 0; c < size.x; c++) {
@@ -33,6 +36,23 @@ function updateWorld ($world, cellList) {
   })
 }
 
+function addToolboxItem (size, cellList, $leftBar, isSelected) {
+  const $result = createWorld(size)
+  cellList.forEach(function (cell) {
+    cell.color = 'lightblue'
+  })
+  updateWorld($result, cellList)
+  if (isSelected) {
+    $result.addClass('selected')
+  }
+  $result.appendTo($leftBar)
+
+  $result.click(function () {
+    $leftBar.find('table').removeClass('selected')
+    $result.addClass('selected')
+  })
+}
+
 function hookWorld ($world, socket, color) {
   $world.find('td').click(function () {
     const $this = $(this)
@@ -56,10 +76,35 @@ $(function () {
 
   // jQuery objects
   let $world = $('#world')
+  const $leftBar = $('#leftbar')
+
+  // Toolbox initialization
+  addToolboxItem({ x: 3, y: 3 }, [
+    { x: 1, y: 1 }
+  ], $leftBar, true)
+  addToolboxItem({ x: 5, y: 5 }, [
+    { x: 2, y: 1 },
+    { x: 2, y: 2 },
+    { x: 2, y: 3 }
+  ], $leftBar)
+  addToolboxItem({ x: 5, y: 5 }, [
+    { x: 2, y: 1 },
+    { x: 3, y: 1 },
+    { x: 1, y: 2 },
+    { x: 2, y: 2 },
+    { x: 2, y: 3 }
+  ], $leftBar)
+  addToolboxItem({ x: 5, y: 5 }, [
+    { x: 2, y: 1 },
+    { x: 3, y: 2 },
+    { x: 1, y: 3 },
+    { x: 2, y: 3 },
+    { x: 3, y: 3 }
+  ], $leftBar)
 
   // Game world initialization
   socket.on('game start info', function (data) {
-    const $newWorld = createWorld({ x: data.world.xLength, y: data.world.yLength })
+    const $newWorld = createWorld({ x: data.world.xLength, y: data.world.yLength }, 'world')
     $world.replaceWith($newWorld)
     $world = $newWorld
     updateWorld($world, data.world.cellList)

@@ -102,11 +102,12 @@ table.game:hover {
   cursor: pointer;
 }
 
+table.game.selected {
+  border-style: double;
+  border-color: red;
+}
+
 table.game td {
   height: 15px;
   width: 15px;
-}
-
-table.game td.alive {
-  background-color: lightblue;
 }
