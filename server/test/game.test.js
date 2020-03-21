@@ -56,6 +56,10 @@ describe('game.js', function () {
     })
   })
 
+  describe('addCells()', function () {
+    it('should not overwrite existing cells')
+  })
+
   describe('nextWorld()', function () {
     describe('still lifes', function () {
       it('should produce unchanged next world for block', function () {

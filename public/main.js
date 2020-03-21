@@ -127,6 +127,7 @@ $(function () {
     $world.replaceWith($newWorld)
     $world = $newWorld
     updateWorld($world, data.world.cellList, { overwrite: true })
+    setCellColor($('#player-color'), data.player.color)
     hookWorld($world, socket, data.player.color)
   })
 

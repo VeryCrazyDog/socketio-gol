@@ -7,6 +7,8 @@ A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 ## Features
 - Every player will be assigned with a random color.
 - World update only happens when there is at least one player connected.
+- When new cell is produced, it's color will be a [color mix](https://github.com/Qix-/color/blob/a6fce8808b1845bfd38a6ccc5b9a369e010ada82/index.js#L366)
+	of all 3 cells around it.
 
 
 ## Prerequisite
