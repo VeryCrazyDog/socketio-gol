@@ -21,6 +21,10 @@ A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 ## Limitations
 - Game status is only stored in memory and is not persistently stored in a file or database.
 	As a result, game status will be lost upon web application restart.
+- Scalability was not included in the design. However it is possible with
+	[Node.js cluster](https://socket.io/docs/using-multiple-nodes/#Using-Node-JS-Cluster)
+	with sticky session and [Redis adapater](https://socket.io/docs/using-multiple-nodes/#Passing-events-between-nodes)
+	with Socket IO.
 
 
 ## Known issues
@@ -90,8 +94,14 @@ Below are items which are currently missing and can be further enhanced.
 		wanted.
 	- Tooltips on both sidebar to give more informative explanation.
 	- Add game information to the screen, for example current number of turn of the world.
+	- An overlay color of the picked cell pattern from the toolbox can be shown on
+		the grid when the mouse cursor is over the grid.
 - Testing
-	- Implement pending test cases
+	- Implement pending test cases.
+	- Implement additional test cases to cover more components.
+- Stability
+	- Better error handling with try-catch to avoid a single request triggered a bug
+		and crashing the whole server.
 - Infrastructure
 	- HTTPS support
 - Security
