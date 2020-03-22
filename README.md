@@ -15,6 +15,7 @@ A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 - World update only happens when there is at least one player connected.
 - When new cell is produced, it's color will be a [color mix](https://github.com/Qix-/color/blob/a6fce8808b1845bfd38a6ccc5b9a369e010ada82/index.js#L366)
 	of all 3 cells around it.
+- Tested to work on Chrome, Firefox, Internet Explorer 11, Safari and Chrome for Android.
 
 
 ## Limitations
@@ -30,7 +31,7 @@ A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 	world.
 
 
-## Prerequisite
+## System requirement
 - Node.js 12.16.x
 
 
@@ -69,6 +70,7 @@ This web application is ready for [Heroku](https://www.heroku.com/) deployment b
 
 
 ## Accepted environment variables
+The following environment variables are supported by this web application:
 - `PORT`: The port that this web application will listen to, default is `3000`.
 - `NODE_ENV`: The node environment that this web application will be running in. Possible
 	values are `development` and `production`. Default is `undefined` which is equal
