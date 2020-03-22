@@ -88,6 +88,8 @@ class Game {
   }
 
   get worldInfo () {
+    // TODO Caching the cell list so that we can use the cached cell list for every
+    //   client when there is no new cells added by clients
     const cellList = []
     this.layout.forEach(row => {
       row.forEach(cell => {

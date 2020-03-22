@@ -14,6 +14,19 @@ A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 	of all 3 cells around it.
 
 
+## Limitations
+- Game status is only stored in memory and is not persistently stored in a file or database.
+	As a result, game status will be lost upon web application restart.
+
+
+## Known issues
+- When player add cells to the world, it is possible that those new cells disappeared
+	for a short period of time because the whold world is updated before those new
+	cells arrived to server for processing. A possible solution to this will be sending only
+	changed cells from server to client, instead of sending all cell status in the whole
+	world.
+
+
 ## Prerequisite
 - Node.js 12.16.x
 
@@ -61,11 +74,6 @@ This web application is ready for Heroku deployment by simply perform Git push t
 	values are `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR` and `SILENT`.
 
 
-## Known issues
-- When player add cells to the world, it is possible that those new cells disappeared
-	for a short period of time because the world is updated before those new cells arrived to server.
-
-
 ## TODO
 Below are items which are currently missing and can be further enhanced.
 - Features
@@ -86,6 +94,7 @@ Below are items which are currently missing and can be further enhanced.
 - Optimizations
 	- Webpack browser side script
 	- Set up common library which implement common game logic for use in both web browser and server side
+	- Implement cachcing marked by `TODO` in the source code in `server/game.js`
 
 
 ## License

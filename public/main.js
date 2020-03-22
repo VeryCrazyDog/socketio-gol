@@ -69,6 +69,10 @@ $(function () {
     })
   }
 
+  function updateConnectedPlayerCount (playerCount) {
+    $('#connected-player').text(playerCount)
+  }
+
   function hookWorld ($world, socket, playerColor) {
     $world.find('td').click(function () {
       const clickedX = this.cellIndex
@@ -130,6 +134,7 @@ $(function () {
     $world = $newWorld
     updateWorld($world, data.world.cellList, { overwrite: true })
     setCellColor($('#player-color'), data.player.color)
+    updateConnectedPlayerCount(data.game.connected)
     hookWorld($world, socket, data.player.color)
   })
 
@@ -142,5 +147,9 @@ $(function () {
 
   socket.on('update world', function (data) {
     updateWorld($world, data.cellList, { overwrite: true })
+  })
+
+  socket.on('update game', function (data) {
+    updateConnectedPlayerCount(data.connected)
   })
 })

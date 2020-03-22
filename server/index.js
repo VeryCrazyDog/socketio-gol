@@ -60,7 +60,14 @@ io.on('connection', (socket) => {
       id: clientId,
       color: clientColor.string()
     },
+    game: {
+      connected: connectedClientCount
+    },
     world: game.worldInfo
+  })
+  // Notify other players
+  socket.broadcast.emit('update game', {
+    connected: connectedClientCount
   })
 
   // Connection handling
@@ -71,6 +78,10 @@ io.on('connection', (socket) => {
       logger.info('Stopping interval update...')
       clearInterval(intervalUpdateId)
       intervalUpdateId = null
+    } else {
+      socket.broadcast.emit('update game', {
+        connected: connectedClientCount
+      })
     }
   })
 
