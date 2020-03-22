@@ -1,6 +1,9 @@
 # Socket.IO Conway's Game of Life
 An interacive [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
-[Socket.IO](https://socket.io/) demo which allow multiple players accessing the same world.
+[Socket.IO](https://socket.io/) demo which allow multiple players interact with same world.
+This is similar to the [chat demo](https://socket.io/demos/chat/) and
+[whiteboard demo](https://socket.io/demos/whiteboard/) available on Socket IO.
+
 Socket IO is used because WebSocket protocol is best suitable for real-time application
 which requires low latency and bi-direction communication.
 
@@ -62,7 +65,7 @@ To run in production mode, run the following command.
 npm start
 ```
 
-This web application is ready for Heroku deployment by simply perform Git push to Heroku.
+This web application is ready for [Heroku](https://www.heroku.com/) deployment by simply perform Git push to Heroku.
 
 
 ## Accepted environment variables
@@ -83,8 +86,8 @@ Below are items which are currently missing and can be further enhanced.
 - UX
 	- Pause and resume of world update, so that player can add the cell pattern as they
 		wanted.
-	- Add game information to the screen, for example number of connected players,
-		current number of turn of the world.
+	- Tooltips on both sidebar to give more informative explanation.
+	- Add game information to the screen, for example current number of turn of the world.
 - Testing
 	- Implement pending test cases
 - Infrastructure
@@ -92,9 +95,12 @@ Below are items which are currently missing and can be further enhanced.
 - Security
 	- Validation on client-sent data
 - Optimizations
-	- Webpack browser side script
-	- Set up common library which implement common game logic for use in both web browser and server side
-	- Implement cachcing marked by `TODO` in the source code in `server/game.js`
+	- Webpack browser side script to allow use of new ECMAScript features on older browsers,
+		and allow minimizing the file size and reduce network usage.
+	- Set up common library which implement common game elements for use in both web browser
+		client side and server side. This takes the advantage of using JavaScript for
+		full stack development.
+	- Implement caching marked by `TODO` in the source code in `server/game.js`.
 
 
 ## License
@@ -104,4 +110,5 @@ This demo is licensed under the [MIT License](LICENSE).
 ## Acknowledge
 Source code `server/random-color.js` is written based on [random-color](https://www.npmjs.com/package/random-color).
 
-Favicon are taken from [Wikipedia](https://commons.wikimedia.org/wiki/File:Game_of_life_fpento.svg).
+Favicon is taken from [Wikipedia](https://commons.wikimedia.org/wiki/File:Game_of_life_fpento.svg)
+which is released to [public domain](https://en.wikipedia.org/wiki/en:public_domain).
