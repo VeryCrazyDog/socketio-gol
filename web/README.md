@@ -1,4 +1,4 @@
-# web
+# socketio-gol-web
 
 ## Project setup
 ```
