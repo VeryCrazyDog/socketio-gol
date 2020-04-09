@@ -1,11 +1,17 @@
 <template>
-  <div class="sidebar left">
+  <div :class="['sidebar', position]">
     <p>Toolbox</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Toolbox'
+  name: 'Toolbox',
+  props: {
+    position: {
+      type: String,
+      default: ''
+    }
+  }
 }
 </script>

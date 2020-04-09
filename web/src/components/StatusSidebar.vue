@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar right">
+  <div :class="['sidebar', position]">
     <p>You</p>
     <table class="center fixed game">
       <tr>
@@ -15,6 +15,12 @@
 
 <script>
 export default {
-  name: 'StatusBar'
+  name: 'StatusBar',
+  props: {
+    position: {
+      type: String,
+      default: ''
+    }
+  }
 }
 </script>

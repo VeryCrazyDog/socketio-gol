@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'GameWorld'
+  name: 'Game'
 }
 </script>
 

@@ -6,22 +6,22 @@
         target="_blank"
       >Conway's Game of Life</a>
     </h1>
-    <ToolboxSidebar />
-    <GameWorld />
-    <StatusSidebar />
+    <ToolboxSidebar position="left" />
+    <Game />
+    <StatusSidebar position="right" />
   </div>
 </template>
 
 <script>
 import ToolboxSidebar from './components/ToolboxSidebar.vue'
-import GameWorld from './components/GameWorld.vue'
+import Game from './components/Game.vue'
 import StatusSidebar from './components/StatusSidebar.vue'
 
 export default {
   name: 'App',
   components: {
     ToolboxSidebar,
-    GameWorld,
+    Game,
     StatusSidebar
   }
 }
