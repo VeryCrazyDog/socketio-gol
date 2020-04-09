@@ -1,11 +1,10 @@
 <template>
   <div :class="['sidebar', position]">
     <p>You</p>
-    <table class="center fixed game">
-      <tr>
-        <td id="player-color" />
-      </tr>
-    </table>
+    <World
+      x-len="1"
+      y-len="1"
+    />
     <p>Players</p>
     <p id="connected-player">
       ?
@@ -14,8 +13,13 @@
 </template>
 
 <script>
+import World from './World.vue'
+
 export default {
   name: 'StatusBar',
+  components: {
+    World
+  },
   props: {
     position: {
       type: String,
