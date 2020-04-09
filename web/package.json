@@ -19,7 +19,8 @@
     "vue-template-compiler": "^2.6.11"
   },
   "scripts": {
-    "lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint --no-fix",
+    "fix": "vue-cli-service lint",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
