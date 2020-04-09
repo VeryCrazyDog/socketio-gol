@@ -1,28 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1><a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">Conway's Game of Life</a></h1>
+    <GameWorld/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import GameWorld from './components/GameWorld.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    GameWorld
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<style scoped>
+h1 {
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+
+a {
+  color: lightgray;
+  text-decoration: none;
+}
+
+a:hover {
+  color: lightgoldenrodyellow;
+  text-decoration: underline;
 }
 </style>
