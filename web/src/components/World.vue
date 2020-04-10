@@ -18,11 +18,17 @@ export default {
   props: {
     xLen: {
       type: Number,
-      default: 0
+      required: true,
+      validator: function (value) {
+        return value > 0
+      }
     },
     yLen: {
       type: Number,
-      default: 0
+      required: true,
+      validator: function (value) {
+        return value > 0
+      }
     }
   }
 }
