@@ -8,8 +8,6 @@
 </template>
 
 <script>
-const POS_LEFT = 'left'
-const POS_RIGHT = 'right'
 const POS_GONE = 'gone'
 
 export default {
@@ -19,9 +17,12 @@ export default {
       type: String,
       default: POS_GONE,
       validator: function (value) {
-        return [POS_LEFT, POS_RIGHT, POS_GONE].includes(value)
+        return ['left', 'right', POS_GONE].includes(value)
       }
     }
+  },
+  created: function () {
+    this.POS_GONE = POS_GONE
   }
 }
 </script>
