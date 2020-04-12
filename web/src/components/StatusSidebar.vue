@@ -19,7 +19,7 @@ import Sidebar from './Sidebar.vue'
 import World from './World.vue'
 
 export default {
-  name: 'StatusBar',
+  name: 'StatusSidebar',
   components: {
     World
   },

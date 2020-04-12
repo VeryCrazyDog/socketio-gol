@@ -21,7 +21,7 @@ import Sidebar from './Sidebar.vue'
 import World from './World.vue'
 
 export default {
-  name: 'Toolbox',
+  name: 'ToolboxSidebar',
   components: {
     World
   },
