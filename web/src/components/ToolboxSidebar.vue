@@ -4,14 +4,24 @@
     :class="['sidebar', position]"
   >
     <p>Toolbox</p>
+    <World
+      :size="{x: 3, y: 3}"
+      :is-selectable="true"
+      :is-selected="true"
+    />
   </div>
 </template>
 
 <script>
+import World from './World.vue'
+
 const POS_GONE = 'gone'
 
 export default {
   name: 'Toolbox',
+  components: {
+    World
+  },
   props: {
     position: {
       type: String,

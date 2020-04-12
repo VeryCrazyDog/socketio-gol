@@ -1,34 +1,47 @@
 <template>
-  <table class="center fixed game">
+  <table :class="[isSelectable ? 'selectable' : null, isSelected ? 'selected' : null]">
     <tr
-      v-for="y in yLen"
+      v-for="y in size.y"
       :key="y"
     >
-      <td
-        v-for="x in xLen"
+      <Cell
+        v-for="x in size.x"
         :key="x"
+        :x="x"
+        :y="y"
       />
     </tr>
   </table>
 </template>
 
 <script>
+import Cell from './Cell.vue'
+
 export default {
   name: 'World',
+  components: {
+    Cell
+  },
   props: {
-    xLen: {
-      type: Number,
+    size: {
+      type: Object,
       required: true,
       validator: function (value) {
-        return value > 0
+        return value && value.x && value.x > 0 && value.y && value.y > 0
       }
     },
-    yLen: {
-      type: Number,
-      required: true,
-      validator: function (value) {
-        return value > 0
-      }
+    isSelectable: {
+      type: Boolean,
+      default: false
+    },
+    isSelected: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: function () {
+    return {
+      posList: []
     }
   }
 }
@@ -40,12 +53,9 @@ table, th, td {
   border-collapse: collapse;
 }
 
-table.center {
+table {
   margin-left: auto;
   margin-right: auto;
-}
-
-table.fixed {
   table-layout: fixed;
   width: max-content;
 }
@@ -54,13 +64,8 @@ table.selectable:hover {
   cursor: pointer;
 }
 
-table.game.selected {
+table.selected {
   border-style: double;
   border-color: red;
-}
-
-table.game td {
-  height: 15px;
-  width: 15px;
 }
 </style>

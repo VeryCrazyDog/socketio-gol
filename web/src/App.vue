@@ -48,11 +48,8 @@ export default {
   top: 0;
 }
 
-.sidebar table, .sidebar p {
-  margin: 10px;
-}
-
 .sidebar p {
+  margin: 10px;
   text-align: center;
 }
 </style>
