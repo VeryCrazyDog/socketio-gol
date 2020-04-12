@@ -5,50 +5,13 @@
   >
     <p>Toolbox</p>
     <World
-      :size="{x: 3, y: 3}"
+      v-for="(world, index) in items"
+      :key="index"
+      :size="world.size"
       :is-selectable="true"
-      :is-selected="selectedIndex === 0"
-      :cell-list="[
-        { x: 1, y: 1, color: 'lightblue' }
-      ]"
-      @world-selected="selectedIndex = 0"
-    />
-    <World
-      :size="{x: 5, y: 5}"
-      :is-selectable="true"
-      :is-selected="selectedIndex === 1"
-      :cell-list="[
-        { x: 2, y: 1, color: 'lightblue' },
-        { x: 2, y: 2, color: 'lightblue' },
-        { x: 2, y: 3, color: 'lightblue' }
-      ]"
-      @world-selected="selectedIndex = 1"
-    />
-    <World
-      :size="{x: 5, y: 5}"
-      :is-selectable="true"
-      :is-selected="selectedIndex === 2"
-      :cell-list="[
-        { x: 2, y: 1, color: 'lightblue' },
-        { x: 3, y: 1, color: 'lightblue' },
-        { x: 1, y: 2, color: 'lightblue' },
-        { x: 2, y: 2, color: 'lightblue' },
-        { x: 2, y: 3, color: 'lightblue' },
-      ]"
-      @world-selected="selectedIndex = 2"
-    />
-    <World
-      :size="{x: 5, y: 5}"
-      :is-selectable="true"
-      :is-selected="selectedIndex === 3"
-      :cell-list="[
-        { x: 2, y: 1, color: 'lightblue' },
-        { x: 3, y: 2, color: 'lightblue' },
-        { x: 1, y: 3 , color: 'lightblue' },
-        { x: 2, y: 3 , color: 'lightblue' },
-        { x: 3, y: 3 , color: 'lightblue' },
-      ]"
-      @world-selected="selectedIndex = 3"
+      :is-selected="selectedIndex === index"
+      :cell-list="world.cellList"
+      @world-selected="selectedIndex = index"
     />
   </div>
 </template>
@@ -64,7 +27,49 @@ export default {
   },
   extends: Sidebar,
   data: function () {
+    const items = [
+      {
+        size: { x: 3, y: 3 },
+        cellList: [
+          { x: 1, y: 1 }
+        ]
+      },
+      {
+        size: { x: 5, y: 5 },
+        cellList: [
+          { x: 2, y: 1 },
+          { x: 2, y: 2 },
+          { x: 2, y: 3 }
+        ]
+      },
+      {
+        size: { x: 5, y: 5 },
+        cellList: [
+          { x: 2, y: 1 },
+          { x: 3, y: 1 },
+          { x: 1, y: 2 },
+          { x: 2, y: 2 },
+          { x: 2, y: 3 }
+        ]
+      },
+      {
+        size: { x: 5, y: 5 },
+        cellList: [
+          { x: 2, y: 1 },
+          { x: 3, y: 2 },
+          { x: 1, y: 3 },
+          { x: 2, y: 3 },
+          { x: 3, y: 3 }
+        ]
+      }
+    ]
+    items.forEach(item => {
+      item.cellList.forEach(cell => {
+        cell.color = 'lightblue'
+      })
+    })
     return {
+      items,
       selectedIndex: 0
     }
   }
