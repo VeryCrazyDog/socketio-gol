@@ -1,14 +1,15 @@
 <template>
   <table :class="cssClass">
     <tr
-      v-for="y in size.y"
-      :key="y"
+      v-for="(row, yIndex) in layout"
+      :key="yIndex"
     >
       <Cell
-        v-for="x in size.x"
-        :key="x"
-        :x="x"
-        :y="y"
+        v-for="(cell, xIndex) in row"
+        :key="xIndex"
+        :x="xIndex"
+        :y="yIndex"
+        :color="cell.color"
       />
     </tr>
   </table>
@@ -16,6 +17,19 @@
 
 <script>
 import Cell from './Cell.vue'
+
+function updateLayout (layout, cellList) {
+  cellList.forEach(({ x, y, color }) => {
+    if (y in layout && x in layout[y]) {
+      const cell = layout[y][x]
+      if (color) {
+        cell.color = color
+      } else {
+        cell.color = null
+      }
+    }
+  })
+}
 
 export default {
   name: 'World',
@@ -45,9 +59,15 @@ export default {
       },
       validator: function (value) {
         return value.every(item => {
-          return (item && item.x && item.x > 0 && item.y && item.y > 0)
+          return (item && item.x && item.x >= 0 && item.y && item.y >= 0)
         })
       }
+    }
+  },
+  data: function () {
+    // Rely on `immediate: true` to update the layout to avoid code complexity
+    return {
+      layout: []
     }
   },
   computed: {
@@ -59,16 +79,23 @@ export default {
     }
   },
   watch: {
-    size: function () {
-      const result = []
-      for (let y = 0; y < this.size.y; y++) {
-        const row = []
-        for (let x = 0; x < this.size.x; x++) {
-          row.push({ x, y, color: null })
+    size: {
+      handler: function () {
+        const result = []
+        for (let y = 0; y < this.size.y; y++) {
+          const row = []
+          for (let x = 0; x < this.size.x; x++) {
+            row.push({ x, y, color: null })
+          }
+          result.push(row)
         }
-        result.push(row)
-      }
-      this.layout = result
+        updateLayout(result, this.cellList)
+        this.layout = result
+      },
+      immediate: true
+    },
+    cellList: function () {
+      updateLayout(this.layout, this.cellList)
     }
   }
 }

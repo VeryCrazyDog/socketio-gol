@@ -10,14 +10,14 @@ export default {
       type: Number,
       required: true,
       validator: function (value) {
-        return value > 0
+        return value >= 0
       }
     },
     y: {
       type: Number,
       required: true,
       validator: function (value) {
-        return value > 0
+        return value >= 0
       }
     },
     color: {
@@ -28,7 +28,7 @@ export default {
   computed: {
     cssStyle: function () {
       const result = {}
-      if (this.color !== null) {
+      if (this.color) {
         result['background-color'] = this.color
       }
       return result

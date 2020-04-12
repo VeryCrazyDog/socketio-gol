@@ -23,6 +23,30 @@
         { x: 2, y: 3, color: 'lightblue' }
       ]"
     />
+    <World
+      key="2"
+      :size="{x: 5, y: 5}"
+      :is-selectable="true"
+      :cell-list="[
+        { x: 2, y: 1, color: 'lightblue' },
+        { x: 3, y: 1, color: 'lightblue' },
+        { x: 1, y: 2, color: 'lightblue' },
+        { x: 2, y: 2, color: 'lightblue' },
+        { x: 2, y: 3, color: 'lightblue' },
+      ]"
+    />
+    <World
+      key="3"
+      :size="{x: 5, y: 5}"
+      :is-selectable="true"
+      :cell-list="[
+        { x: 2, y: 1, color: 'lightblue' },
+        { x: 3, y: 2, color: 'lightblue' },
+        { x: 1, y: 3 , color: 'lightblue' },
+        { x: 2, y: 3 , color: 'lightblue' },
+        { x: 3, y: 3 , color: 'lightblue' },
+      ]"
+    />
   </div>
 </template>
 
