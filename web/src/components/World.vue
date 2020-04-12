@@ -37,11 +37,17 @@ export default {
     isSelected: {
       type: Boolean,
       default: false
-    }
-  },
-  data: function () {
-    return {
-      posList: []
+    },
+    cellList: {
+      type: Array,
+      default: function () {
+        return []
+      },
+      validator: function (value) {
+        return value.every(item => {
+          return (item && item.x && item.x > 0 && item.y && item.y > 0)
+        })
+      }
     }
   },
   computed: {
@@ -50,6 +56,19 @@ export default {
         this.isSelectable ? 'selectable' : null,
         this.isSelected ? 'selected' : null
       ]
+    }
+  },
+  watch: {
+    size: function () {
+      const result = []
+      for (let y = 0; y < this.size.y; y++) {
+        const row = []
+        for (let x = 0; x < this.size.x; x++) {
+          row.push({ x, y, color: null })
+        }
+        result.push(row)
+      }
+      this.layout = result
     }
   }
 }

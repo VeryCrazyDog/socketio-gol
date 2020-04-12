@@ -9,7 +9,7 @@
       :size="{x: 3, y: 3}"
       :is-selectable="true"
       :is-selected="true"
-      :pos-list="[
+      :cell-list="[
         { x: 1, y: 1, color: 'lightblue' }
       ]"
     />
@@ -17,7 +17,7 @@
       key="1"
       :size="{x: 5, y: 5}"
       :is-selectable="true"
-      :pos-list="[
+      :cell-list="[
         { x: 2, y: 1, color: 'lightblue' },
         { x: 2, y: 2, color: 'lightblue' },
         { x: 2, y: 3, color: 'lightblue' }

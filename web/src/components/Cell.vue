@@ -19,11 +19,10 @@ export default {
       validator: function (value) {
         return value > 0
       }
-    }
-  },
-  data: function () {
-    return {
-      color: null
+    },
+    color: {
+      type: String,
+      default: null
     }
   },
   computed: {
