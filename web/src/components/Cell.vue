@@ -1,5 +1,5 @@
 <template>
-  <td :style="style" />
+  <td :style="cssStyle" />
 </template>
 
 <script>
@@ -27,7 +27,7 @@ export default {
     }
   },
   computed: {
-    style: function () {
+    cssStyle: function () {
       const result = {}
       if (this.color !== null) {
         result['background-color'] = this.color

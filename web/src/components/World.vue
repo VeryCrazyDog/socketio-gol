@@ -1,5 +1,5 @@
 <template>
-  <table :class="[isSelectable ? 'selectable' : null, isSelected ? 'selected' : null]">
+  <table :class="cssClass">
     <tr
       v-for="y in size.y"
       :key="y"
@@ -42,6 +42,14 @@ export default {
   data: function () {
     return {
       posList: []
+    }
+  },
+  computed: {
+    cssClass: function () {
+      return [
+        this.isSelectable ? 'selectable' : null,
+        this.isSelected ? 'selected' : null
+      ]
     }
   }
 }
