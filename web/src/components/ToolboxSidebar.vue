@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show="position !== POS_GONE"
+    v-show="!!position"
     :class="['sidebar', position]"
   >
     <p>Toolbox</p>
@@ -13,26 +13,14 @@
 </template>
 
 <script>
+import Sidebar from './Sidebar.vue'
 import World from './World.vue'
-
-const POS_GONE = 'gone'
 
 export default {
   name: 'Toolbox',
   components: {
     World
   },
-  props: {
-    position: {
-      type: String,
-      default: POS_GONE,
-      validator: function (value) {
-        return ['left', 'right', POS_GONE].includes(value)
-      }
-    }
-  },
-  created: function () {
-    this.POS_GONE = POS_GONE
-  }
+  extends: Sidebar
 }
 </script>

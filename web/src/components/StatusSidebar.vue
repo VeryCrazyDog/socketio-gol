@@ -1,9 +1,11 @@
 <template>
-  <div :class="['sidebar', position]">
+  <div
+    v-show="!!position"
+    :class="['sidebar', position]"
+  >
     <p>You</p>
     <World
-      x-len="1"
-      y-len="1"
+      :size="{x: 1, y: 1}"
     />
     <p>Players</p>
     <p id="connected-player">
@@ -13,6 +15,7 @@
 </template>
 
 <script>
+import Sidebar from './Sidebar.vue'
 import World from './World.vue'
 
 export default {
@@ -20,11 +23,6 @@ export default {
   components: {
     World
   },
-  props: {
-    position: {
-      type: String,
-      default: ''
-    }
-  }
+  extends: Sidebar
 }
 </script>

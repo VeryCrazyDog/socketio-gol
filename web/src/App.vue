@@ -27,33 +27,6 @@ export default {
 }
 </script>
 
-<style>
-.sidebar {
-  background-color: #111;
-  height: 100%;
-  overflow-x: hidden;
-  padding: 10px 0;
-  position: fixed;
-  width: 96px;
-  z-index: 1;
-}
-
-.sidebar.left {
-  left: 0;
-  top: 0;
-}
-
-.sidebar.right {
-  right: 0;
-  top: 0;
-}
-
-.sidebar p {
-  margin: 10px;
-  text-align: center;
-}
-</style>
-
 <style scoped>
 h1 {
   text-align: center;
