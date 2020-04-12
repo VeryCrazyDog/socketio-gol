@@ -1,5 +1,8 @@
 <template>
-  <table :class="cssClass">
+  <table
+    :class="cssClass"
+    @[clickEventName]="$emit('world-selected')"
+  >
     <tr
       v-for="(row, yIndex) in layout"
       :key="yIndex"
@@ -76,6 +79,9 @@ export default {
         this.isSelectable ? 'selectable' : null,
         this.isSelected ? 'selected' : null
       ]
+    },
+    clickEventName: function () {
+      return this.isSelectable ? 'click' : null
     }
   },
   watch: {

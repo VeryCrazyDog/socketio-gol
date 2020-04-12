@@ -5,28 +5,29 @@
   >
     <p>Toolbox</p>
     <World
-      key="0"
       :size="{x: 3, y: 3}"
       :is-selectable="true"
-      :is-selected="true"
+      :is-selected="selectedIndex === 0"
       :cell-list="[
         { x: 1, y: 1, color: 'lightblue' }
       ]"
+      @world-selected="selectedIndex = 0"
     />
     <World
-      key="1"
       :size="{x: 5, y: 5}"
       :is-selectable="true"
+      :is-selected="selectedIndex === 1"
       :cell-list="[
         { x: 2, y: 1, color: 'lightblue' },
         { x: 2, y: 2, color: 'lightblue' },
         { x: 2, y: 3, color: 'lightblue' }
       ]"
+      @world-selected="selectedIndex = 1"
     />
     <World
-      key="2"
       :size="{x: 5, y: 5}"
       :is-selectable="true"
+      :is-selected="selectedIndex === 2"
       :cell-list="[
         { x: 2, y: 1, color: 'lightblue' },
         { x: 3, y: 1, color: 'lightblue' },
@@ -34,11 +35,12 @@
         { x: 2, y: 2, color: 'lightblue' },
         { x: 2, y: 3, color: 'lightblue' },
       ]"
+      @world-selected="selectedIndex = 2"
     />
     <World
-      key="3"
       :size="{x: 5, y: 5}"
       :is-selectable="true"
+      :is-selected="selectedIndex === 3"
       :cell-list="[
         { x: 2, y: 1, color: 'lightblue' },
         { x: 3, y: 2, color: 'lightblue' },
@@ -46,6 +48,7 @@
         { x: 2, y: 3 , color: 'lightblue' },
         { x: 3, y: 3 , color: 'lightblue' },
       ]"
+      @world-selected="selectedIndex = 3"
     />
   </div>
 </template>
@@ -59,6 +62,11 @@ export default {
   components: {
     World
   },
-  extends: Sidebar
+  extends: Sidebar,
+  data: function () {
+    return {
+      selectedIndex: 0
+    }
+  }
 }
 </script>
