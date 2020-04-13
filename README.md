@@ -119,9 +119,9 @@ The following environment variables are supported by the frontend development se
 ## TODO
 Below are items which are currently missing and can be further enhanced.
 - Features
-	- World size configuration
-	- Adjustable world update interval
-	- World reset button
+	- World size configuration.
+	- Adjustable world update interval.
+	- World reset button.
 - UX
 	- Pause and resume of world update, so that player can add the cell pattern as they
 		wanted.
@@ -130,18 +130,17 @@ Below are items which are currently missing and can be further enhanced.
 	- An overlay color of the picked cell pattern from the toolbox can be shown on
 		the grid when the mouse cursor is over the grid.
 - Testing
-	- Implement pending test cases.
-	- Implement additional test cases to cover more components.
+	- Implement pending test cases in backend.
+	- Implement additional test cases to cover more components in backend.
+	- Implement test cases in frontend.
 - Stability
 	- Better error handling with try-catch to avoid a single request triggered a bug
 		and crashing the whole server.
 - Infrastructure
-	- HTTPS support
+	- HTTPS support.
 - Security
-	- Validation on client-sent data
+	- Validation on client-sent data.
 - Optimizations
-	- Webpack browser side script to allow use of new ECMAScript features on older browsers,
-		and allow minimizing the file size and reduce network usage.
 	- Set up common library which implement common game elements for use in both web browser
 		client side and server side. This takes the advantage of using JavaScript for
 		full stack development.
