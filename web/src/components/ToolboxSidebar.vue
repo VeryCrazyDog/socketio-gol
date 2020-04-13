@@ -67,10 +67,23 @@ export default {
       item.cellList.forEach(cell => {
         cell.color = 'lightblue'
       })
+      const centerX = ~~(item.size.x / 2)
+      const centerY = ~~(item.size.y / 2)
+      item.offsetList = item.cellList.map(function (pos) {
+        return {
+          x: pos.x - centerX,
+          y: pos.y - centerY
+        }
+      })
     })
     return {
       items,
       selectedIndex: 0
+    }
+  },
+  methods: {
+    getCellOffsetList: function () {
+      return this.item[this.selectedIndex].offsetList
     }
   }
 }
