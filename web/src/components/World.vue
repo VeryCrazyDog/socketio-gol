@@ -47,7 +47,7 @@ export default {
         return value && value.x >= 0 && value.y >= 0
       }
     },
-    isClickable: {
+    isSelectable: {
       type: Boolean,
       default: false
     },
@@ -76,12 +76,12 @@ export default {
   computed: {
     cssClass: function () {
       return [
-        this.isClickable ? 'clickable' : null,
+        this.isSelectable ? 'selectable' : null,
         this.isSelected ? 'selected' : null
       ]
     },
     clickEventName: function () {
-      return this.isClickable ? 'click' : null
+      return this.isSelectable ? 'click' : null
     }
   },
   watch: {
@@ -119,7 +119,7 @@ table {
   width: max-content;
 }
 
-table.clickable:hover {
+table.selectable:hover {
   cursor: pointer;
 }
 

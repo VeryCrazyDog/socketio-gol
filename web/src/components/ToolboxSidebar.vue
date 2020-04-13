@@ -8,7 +8,7 @@
       v-for="(world, index) in items"
       :key="index"
       :size="world.size"
-      :is-clickable="true"
+      :is-selectable="true"
       :is-selected="selectedIndex === index"
       :cell-list="world.cellList"
       @world-selected="selectedIndex = index"

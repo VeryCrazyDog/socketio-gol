@@ -2,7 +2,7 @@
   <div class="main">
     <World
       :size="world.size"
-      :is-clickable="true"
+      :is-selectable="true"
     />
   </div>
 </template>
