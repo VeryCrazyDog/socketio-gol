@@ -70,9 +70,6 @@ export default {
     ]
     const offsets = {}
     items.forEach(item => {
-      item.cellList.forEach(cell => {
-        cell.color = 'lightblue'
-      })
       const centerX = ~~(item.size.x / 2)
       const centerY = ~~(item.size.y / 2)
       offsets[item.name] = item.cellList.map(function (pos) {
@@ -91,7 +88,7 @@ export default {
   mounted: function () {
     const itemRefs = this.$refs
     this.items.forEach(item => {
-      itemRefs[item.name][0].update(item.cellList, { overwrite: true })
+      itemRefs[item.name][0].update(item.cellList, { color: 'lightblue', overwrite: true })
     })
   },
   methods: {

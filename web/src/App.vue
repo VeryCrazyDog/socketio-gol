@@ -18,7 +18,11 @@
         @cell-clicked="cellClicked"
       />
     </div>
-    <StatusSidebar position="right" />
+    <StatusSidebar
+      position="right"
+      :player-color="playerColor"
+      :connected-player="connectedPlayer"
+    />
   </div>
 </template>
 
@@ -37,6 +41,7 @@ export default {
   data: function () {
     return {
       playerColor: 'transparent',
+      connectedPlayer: null,
       world: {
         size: { x: 0, y: 0 },
         cellList: []
@@ -58,6 +63,7 @@ export default {
   sockets: {
     'game start info': function (data) {
       this.playerColor = data.player.color
+      this.connectedPlayer = data.game.connected
       this.world.size = { x: data.world.xLength, y: data.world.yLength }
       // updateWorld($world, data.world.cellList, { overwrite: true })
       // hookWorld($world, socket, data.player.color)

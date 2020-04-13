@@ -5,12 +5,12 @@
   >
     <p>You</p>
     <World
+      ref="player"
       :size="{x: 1, y: 1}"
-      :cell-list="[{x: 0, y: 0, color: playerColor}]"
     />
     <p>Players</p>
     <p id="connected-player">
-      {{ connectedPlayer }}
+      {{ connectedPlayer === null ? '?' : connectedPlayer }}
     </p>
   </div>
 </template>
@@ -25,16 +25,21 @@ export default {
     World
   },
   extends: Sidebar,
-  data: function () {
-    return {
-      playerColor: 'transparent',
-      connectedPlayer: '?'
+  props: {
+    playerColor: {
+      type: String,
+      required: true,
+      default: 'transparent'
+    },
+    connectedPlayer: {
+      type: Number,
+      default: null
     }
   },
-  sockets: {
-    'game start info': function (data) {
-      this.playerColor = data.player.color
-      this.connectedPlayer = data.game.connected
+  watch: {
+    playerColor: function () {
+      // TODO Not working
+      this.$refs.player.update([{ x: 0, y: 0 }], { color: this.playerColor, overwrite: true })
     }
   }
 }
