@@ -37,7 +37,7 @@ const game = new Game(DEFAULT_WORLD_XLENGTH, DEFAULT_WORLD_YLENGTH)
 let intervalUpdateId = null
 
 // Routing setup
-app.use(express.static(path.join(path.dirname(__dirname), 'public')))
+app.use(express.static(path.join(path.dirname(__dirname), 'web', 'dist')))
 
 // Socket events
 io.on('connection', (socket) => {
