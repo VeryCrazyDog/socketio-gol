@@ -5,13 +5,14 @@
   >
     <p>Toolbox</p>
     <World
-      v-for="(world, index) in items"
-      :key="index"
+      v-for="world in items"
+      :key="world.name"
+      :ref="world.name"
       :size="world.size"
       :is-selectable="true"
-      :is-selected="selectedIndex === index"
+      :is-selected="selectedItemName === world.name"
       :cell-list="world.cellList"
-      @world-selected="selectedIndex = index"
+      @world-selected="selectedItemName = world.name"
     />
   </div>
 </template>
@@ -29,12 +30,14 @@ export default {
   data: function () {
     const items = [
       {
+        name: 'single',
         size: { x: 3, y: 3 },
         cellList: [
           { x: 1, y: 1 }
         ]
       },
       {
+        name: 'blinker',
         size: { x: 5, y: 5 },
         cellList: [
           { x: 2, y: 1 },
@@ -43,6 +46,7 @@ export default {
         ]
       },
       {
+        name: 'r-pentomino',
         size: { x: 5, y: 5 },
         cellList: [
           { x: 2, y: 1 },
@@ -53,6 +57,7 @@ export default {
         ]
       },
       {
+        name: 'glider',
         size: { x: 5, y: 5 },
         cellList: [
           { x: 2, y: 1 },
@@ -78,8 +83,14 @@ export default {
     })
     return {
       items,
-      selectedIndex: 0
+      selectedItemName: 'single'
     }
+  },
+  mounted: function () {
+    const itemRefs = this.$refs
+    this.items.forEach(item => {
+      itemRefs[item.name][0].update(item.cellList, { overwrite: true })
+    })
   },
   methods: {
     getCellOffsetList: function () {

@@ -21,19 +21,6 @@
 <script>
 import Cell from './Cell.vue'
 
-function updateLayout (layout, cellList) {
-  cellList.forEach(({ x, y, color }) => {
-    if (y in layout && x in layout[y]) {
-      const cell = layout[y][x]
-      if (color) {
-        cell.color = color
-      } else {
-        cell.color = null
-      }
-    }
-  })
-}
-
 export default {
   name: 'World',
   components: {
@@ -58,17 +45,6 @@ export default {
     areCellsClickable: {
       type: Boolean,
       default: false
-    },
-    cellList: {
-      type: Array,
-      default: function () {
-        return []
-      },
-      validator: function (value) {
-        return value.every(item => {
-          return (item && item.x >= 0 && item.y >= 0)
-        })
-      }
     }
   },
   data: function () {
@@ -99,13 +75,23 @@ export default {
           }
           result.push(row)
         }
-        updateLayout(result, this.cellList)
         this.layout = result
       },
       immediate: true
-    },
-    cellList: function () {
-      updateLayout(this.layout, this.cellList)
+    }
+  },
+  methods: {
+    update: function (cellList, options) {
+      const layout = this.layout
+      options = options || {}
+      cellList.forEach(({ x, y, color }) => {
+        if (y in layout && x in layout[y]) {
+          const cell = layout[y][x]
+          if (options.overwrite || cell.color === null) {
+            cell.color = color
+          }
+        }
+      })
     }
   }
 }
