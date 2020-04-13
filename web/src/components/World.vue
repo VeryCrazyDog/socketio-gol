@@ -4,7 +4,7 @@
     @[clickEventName]="$emit('world-selected')"
   >
     <tr
-      v-for="(row, yIndex) in layout"
+      v-for="(row, yIndex) in layout.value"
       :key="yIndex"
     >
       <Cell
@@ -21,17 +21,56 @@
 <script>
 import Cell from './Cell.vue'
 
+const CELL_TEMPLATE = {
+  color: null
+}
+
+// Consider to merge with Game class in `server/game.js`
+export class WorldLayout {
+  constructor (size) {
+    size = size || { x: 0, y: 0 }
+    const layout = []
+    for (let y = 0; y < size.y; y++) {
+      const row = []
+      for (let x = 0; x < size.x; x++) {
+        row.push({
+          ...CELL_TEMPLATE
+        })
+      }
+      layout.push(row)
+    }
+    this.layout = layout
+  }
+
+  get value () {
+    return this.layout
+  }
+
+  update (cellList, options) {
+    const layout = this.layout
+    options = options || {}
+    cellList.forEach(({ x, y, color }) => {
+      if (y in layout && x in layout[y]) {
+        const cell = layout[y][x]
+        if (options.overwrite || cell.color === null) {
+          cell.color = (options.color || color)
+        }
+      }
+    })
+  }
+}
+
 export default {
   name: 'World',
   components: {
     Cell
   },
   props: {
-    size: {
+    layout: {
       type: Object,
       required: true,
       validator: function (value) {
-        return value && value.x >= 0 && value.y >= 0
+        return value instanceof WorldLayout
       }
     },
     isSelectable: {
@@ -47,12 +86,6 @@ export default {
       default: false
     }
   },
-  data: function () {
-    // Rely on `immediate: true` to update the layout to avoid code complexity
-    return {
-      layout: []
-    }
-  },
   computed: {
     cssClass: function () {
       return [
@@ -62,36 +95,6 @@ export default {
     },
     clickEventName: function () {
       return this.isSelectable ? 'click' : null
-    }
-  },
-  watch: {
-    size: {
-      handler: function () {
-        const result = []
-        for (let y = 0; y < this.size.y; y++) {
-          const row = []
-          for (let x = 0; x < this.size.x; x++) {
-            row.push({ color: null })
-          }
-          result.push(row)
-        }
-        this.layout = result
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    update: function (cellList, options) {
-      const layout = this.layout
-      options = options || {}
-      cellList.forEach(({ x, y, color }) => {
-        if (y in layout && x in layout[y]) {
-          const cell = layout[y][x]
-          if (options.overwrite || cell.color === null) {
-            cell.color = (options.color || color)
-          }
-        }
-      })
     }
   }
 }

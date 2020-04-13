@@ -12,8 +12,7 @@
     />
     <div class="main">
       <World
-        ref="world"
-        :size="world.size"
+        :layout="worldLayout"
         :are-cells-clickable="true"
         @cell-clicked="cellClicked"
       />
@@ -28,7 +27,7 @@
 
 <script>
 import ToolboxSidebar from './components/ToolboxSidebar.vue'
-import World from './components/World.vue'
+import World, { WorldLayout } from './components/World.vue'
 import StatusSidebar from './components/StatusSidebar.vue'
 
 export default {
@@ -42,10 +41,7 @@ export default {
     return {
       playerColor: 'transparent',
       connectedPlayer: null,
-      world: {
-        size: { x: 0, y: 0 },
-        cellList: []
-      }
+      worldLayout: new WorldLayout()
     }
   },
   methods: {
@@ -57,14 +53,14 @@ export default {
           y: y + offset.y
         }
       })
-      this.$refs.world.update(posList, { color: this.playerColor })
+      this.worldLayout.update(posList, { color: this.playerColor })
     }
   },
   sockets: {
     'game start info': function (data) {
       this.playerColor = data.player.color
       this.connectedPlayer = data.game.connected
-      this.world.size = { x: data.world.xLength, y: data.world.yLength }
+      this.worldLayout = new WorldLayout({ x: data.world.xLength, y: data.world.yLength })
       // updateWorld($world, data.world.cellList, { overwrite: true })
       // hookWorld($world, socket, data.player.color)
     }

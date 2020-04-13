@@ -4,10 +4,7 @@
     :class="['sidebar', position]"
   >
     <p>You</p>
-    <World
-      ref="player"
-      :size="{x: 1, y: 1}"
-    />
+    <World :layout="playerColorWorldLayout" />
     <p>Players</p>
     <p id="connected-player">
       {{ connectedPlayer === null ? '?' : connectedPlayer }}
@@ -17,7 +14,7 @@
 
 <script>
 import Sidebar from './Sidebar.vue'
-import World from './World.vue'
+import World, { WorldLayout } from './World.vue'
 
 export default {
   name: 'StatusSidebar',
@@ -36,10 +33,14 @@ export default {
       default: null
     }
   },
+  data: function () {
+    return {
+      playerColorWorldLayout: new WorldLayout({ x: 1, y: 1 })
+    }
+  },
   watch: {
     playerColor: function () {
-      // TODO Not working
-      this.$refs.player.update([{ x: 0, y: 0 }], { color: this.playerColor, overwrite: true })
+      this.playerColorWorldLayout.update([{ x: 0, y: 0 }], { color: this.playerColor })
     }
   }
 }

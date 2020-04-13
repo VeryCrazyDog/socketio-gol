@@ -7,8 +7,7 @@
     <World
       v-for="world in items"
       :key="world.name"
-      :ref="world.name"
-      :size="world.size"
+      :layout="world.layout"
       :is-selectable="true"
       :is-selected="selectedItemName === world.name"
       :cell-list="world.cellList"
@@ -19,7 +18,7 @@
 
 <script>
 import Sidebar from './Sidebar.vue'
-import World from './World.vue'
+import World, { WorldLayout } from './World.vue'
 
 export default {
   name: 'ToolboxSidebar',
@@ -70,6 +69,8 @@ export default {
     ]
     const offsets = {}
     items.forEach(item => {
+      item.layout = new WorldLayout(item.size)
+      item.layout.update(item.cellList, { color: 'lightblue', overwrite: true })
       const centerX = ~~(item.size.x / 2)
       const centerY = ~~(item.size.y / 2)
       offsets[item.name] = item.cellList.map(function (pos) {
@@ -84,12 +85,6 @@ export default {
       offsets,
       selectedItemName: 'single'
     }
-  },
-  mounted: function () {
-    const itemRefs = this.$refs
-    this.items.forEach(item => {
-      itemRefs[item.name][0].update(item.cellList, { color: 'lightblue', overwrite: true })
-    })
   },
   methods: {
     getCellOffsetList: function () {
