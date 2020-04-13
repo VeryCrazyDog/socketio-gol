@@ -2,12 +2,11 @@
   "name": "socketio-gol",
   "description": "A Socket.IO demo implementing Conway's Game of Life",
   "engines": {
-    "node": ">= 12.x"
+    "node": "12.16.x"
   },
   "main": "./server/index.js",
   "scripts": {
-    "postinstall": "npm ci --prefix ./server --only=production",
-    "prebuild": "npm ci --prefix ./web",
+    "postinstall": "npm ci --prefix ./web --production=false && npm ci --prefix ./server --only=production",
     "build": "npm run build --prefix ./web",
     "postbuild": "rm -rf ./web/node_modules",
     "start": "npm start --prefix ./server"
