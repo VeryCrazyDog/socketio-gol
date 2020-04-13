@@ -5,6 +5,13 @@
     "node": ">= 12.x"
   },
   "main": "./server/index.js",
+  "scripts": {
+    "postinstall": "npm ci --prefix ./server --only=production",
+    "prebuild": "npm ci --prefix ./web",
+    "build": "npm run build --prefix ./web",
+    "postbuild": "rm -rf ./web/node_modules",
+    "start": "npm start --prefix ./server"
+  },
   "license": "MIT",
   "author": "VCD <VeryCrazyDog@gmail.com>",
   "homepage": "https://github.com/VeryCrazyDog/socketio-gol#readme",
