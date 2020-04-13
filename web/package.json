@@ -1,5 +1,6 @@
 {
   "name": "socketio-gol-web",
+  "description": "A Socket.IO demo web page implementing Conway's Game of Life",
   "dependencies": {
     "core-js": "^3.6.4",
     "vue": "^2.6.11",
@@ -25,5 +26,11 @@
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "author": "VCD <VeryCrazyDog@gmail.com>",
+  "homepage": "https://github.com/VeryCrazyDog/socketio-gol#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VeryCrazyDog/socketio-gol.git"
+  }
 }

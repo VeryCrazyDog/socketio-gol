@@ -1,0 +1,15 @@
+{
+  "name": "socketio-gol",
+  "description": "A Socket.IO demo implementing Conway's Game of Life",
+  "engines": {
+    "node": ">= 12.x"
+  },
+  "main": "./server/index.js",
+  "license": "MIT",
+  "author": "VCD <VeryCrazyDog@gmail.com>",
+  "homepage": "https://github.com/VeryCrazyDog/socketio-gol#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VeryCrazyDog/socketio-gol.git"
+  }
+}
