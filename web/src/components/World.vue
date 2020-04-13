@@ -88,7 +88,7 @@ export default {
         if (y in layout && x in layout[y]) {
           const cell = layout[y][x]
           if (options.overwrite || cell.color === null) {
-            cell.color = color
+            cell.color = (options.color || color)
           }
         }
       })

@@ -6,9 +6,13 @@
         target="_blank"
       >Conway's Game of Life</a>
     </h1>
-    <ToolboxSidebar position="left" />
+    <ToolboxSidebar
+      ref="toolbox"
+      position="left"
+    />
     <div class="main">
       <World
+        ref="world"
         :size="world.size"
         :are-cells-clickable="true"
         @cell-clicked="cellClicked"
@@ -32,6 +36,7 @@ export default {
   },
   data: function () {
     return {
+      playerColor: 'transparent',
       world: {
         size: { x: 0, y: 0 },
         cellList: []
@@ -39,13 +44,20 @@ export default {
     }
   },
   methods: {
-    cellClicked: function (message) {
-      // TODO Implement
-      console.log('app', message)
+    cellClicked: function ({ x, y }) {
+      const offsetList = this.$refs.toolbox.getCellOffsetList()
+      const posList = offsetList.map(offset => {
+        return {
+          x: x + offset.x,
+          y: y + offset.y
+        }
+      })
+      this.$refs.world.update(posList, { color: this.playerColor })
     }
   },
   sockets: {
     'game start info': function (data) {
+      this.playerColor = data.player.color
       this.world.size = { x: data.world.xLength, y: data.world.yLength }
       // updateWorld($world, data.world.cellList, { overwrite: true })
       // hookWorld($world, socket, data.player.color)

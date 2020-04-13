@@ -68,13 +68,14 @@ export default {
         ]
       }
     ]
+    const offsets = {}
     items.forEach(item => {
       item.cellList.forEach(cell => {
         cell.color = 'lightblue'
       })
       const centerX = ~~(item.size.x / 2)
       const centerY = ~~(item.size.y / 2)
-      item.offsetList = item.cellList.map(function (pos) {
+      offsets[item.name] = item.cellList.map(function (pos) {
         return {
           x: pos.x - centerX,
           y: pos.y - centerY
@@ -83,6 +84,7 @@ export default {
     })
     return {
       items,
+      offsets,
       selectedItemName: 'single'
     }
   },
@@ -94,7 +96,7 @@ export default {
   },
   methods: {
     getCellOffsetList: function () {
-      return this.item[this.selectedIndex].offsetList
+      return this.offsets[this.selectedItemName]
     }
   }
 }
