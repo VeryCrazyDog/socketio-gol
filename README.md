@@ -1,8 +1,6 @@
 # Socket.IO Conway's Game of Life
-An interacive [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
-[Socket.IO](https://socket.io/) demo which allow multiple players interact with same world.
-This is similar to the [chat demo](https://socket.io/demos/chat/) and
-[whiteboard demo](https://socket.io/demos/whiteboard/) available on Socket IO.
+An interacive [Conway's Game of Life] [Socket.IO] demo which allow multiple players interact with same world.
+This is similar to the [chat demo][1] and [whiteboard demo][2] available on Socket IO.
 
 Socket IO is used because WebSocket protocol is best suitable for real-time application
 which requires low latency and bi-direction communication.
@@ -13,7 +11,7 @@ A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 ## Features
 - Allow multiple players accessing the same world. Every player will be assigned with a random color.
 - World update only happens when there is at least one player connected.
-- When new cell is produced, it's color will be a [color mix](https://github.com/Qix-/color/blob/a6fce8808b1845bfd38a6ccc5b9a369e010ada82/index.js#L366)
+- When new cell is produced, it's color will be a [color mix][3]
 	of all 3 cells around it.
 - Tested to work on Chrome, Firefox, Internet Explorer 11, Safari and Chrome for Android.
 
@@ -21,10 +19,8 @@ A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 ## Limitations
 - Game status is only stored in memory and is not persistently stored in a file or database.
 	As a result, game status will be lost upon web application restart.
-- Scalability was not included in the design. However it is possible with
-	[Node.js cluster](https://socket.io/docs/using-multiple-nodes/#Using-Node-JS-Cluster)
-	with sticky session and [Redis adapater](https://socket.io/docs/using-multiple-nodes/#Passing-events-between-nodes)
-	with Socket IO.
+- Scalability was not included in the design. However it is possible with [Node.js cluster][4]
+	with sticky session and [Redis adapater][5] with Socket IO.
 
 
 ## Known issues
@@ -70,7 +66,7 @@ To run in production mode, run the following command.
 npm start
 ```
 
-This web application is ready for [Heroku](https://www.heroku.com/) deployment by simply perform Git push to Heroku.
+This web application is ready for [Heroku] deployment by simply perform Git push to Heroku.
 
 
 ## Accepted environment variables
@@ -124,3 +120,14 @@ Source code `server/random-color.js` is written based on [random-color](https://
 
 Favicon is taken from [Wikipedia](https://commons.wikimedia.org/wiki/File:Game_of_life_fpento.svg)
 which is released to [public domain](https://en.wikipedia.org/wiki/en:public_domain).
+
+
+
+[1]: https://socket.io/demos/chat/
+[2]: https://socket.io/demos/whiteboard/
+[3]: https://github.com/Qix-/color/blob/a6fce8808b1845bfd38a6ccc5b9a369e010ada82/index.js#L366
+[4]: https://socket.io/docs/using-multiple-nodes/#Using-Node-JS-Cluster
+[5]: https://socket.io/docs/using-multiple-nodes/#Passing-events-between-nodes
+[Conway's Game of Life]: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+[Heroku]: https://www.heroku.com/
+[Socket.IO]: https://socket.io/

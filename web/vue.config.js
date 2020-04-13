@@ -11,5 +11,13 @@ module.exports = {
         })
         return args
       })
-  }
+  },
+  devServer: {
+    proxy: {
+      '^/socket.io/*': {
+        target: 'http://localhost:3000/socket.io/',
+        secure: false
+      }
+    }
+  },
 }
