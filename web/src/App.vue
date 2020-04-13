@@ -53,6 +53,9 @@ export default {
           y: y + offset.y
         }
       })
+      this.$socket.emit('add cells', {
+        posList
+      })
       this.worldLayout.update(posList, { color: this.playerColor })
     }
   },
@@ -61,8 +64,16 @@ export default {
       this.playerColor = data.player.color
       this.connectedPlayer = data.game.connected
       this.worldLayout = new WorldLayout({ x: data.world.xLength, y: data.world.yLength })
-      // updateWorld($world, data.world.cellList, { overwrite: true })
-      // hookWorld($world, socket, data.player.color)
+      this.worldLayout.update(data.world.cellList, { overwrite: true })
+    },
+    'new cells': function (data) {
+      this.worldLayout.update(data.cellList, { overwrite: true })
+    },
+    'update world': function (data) {
+      this.worldLayout.update(data.cellList, { overwrite: true })
+    },
+    'update game': function (data) {
+      this.connectedPlayer = data.connected
     }
   }
 }
