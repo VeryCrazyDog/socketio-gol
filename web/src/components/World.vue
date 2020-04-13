@@ -44,7 +44,7 @@ export default {
       type: Object,
       required: true,
       validator: function (value) {
-        return value && value.x && value.x > 0 && value.y && value.y > 0
+        return value && value.x >= 0 && value.y >= 0
       }
     },
     isSelectable: {
@@ -62,7 +62,7 @@ export default {
       },
       validator: function (value) {
         return value.every(item => {
-          return (item && item.x && item.x >= 0 && item.y && item.y >= 0)
+          return (item && item.x >= 0 && item.y >= 0)
         })
       }
     }
