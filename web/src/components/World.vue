@@ -10,9 +10,9 @@
       <Cell
         v-for="(cell, xIndex) in row"
         :key="xIndex"
-        :x="xIndex"
-        :y="yIndex"
         :color="cell.color"
+        :is-clickable="areCellsClickable"
+        @cell-clicked="$emit('cell-clicked', {x: xIndex, y: yIndex})"
       />
     </tr>
   </table>
@@ -55,6 +55,10 @@ export default {
       type: Boolean,
       default: false
     },
+    areCellsClickable: {
+      type: Boolean,
+      default: false
+    },
     cellList: {
       type: Array,
       default: function () {
@@ -76,7 +80,7 @@ export default {
   computed: {
     cssClass: function () {
       return [
-        this.isSelectable ? 'selectable' : null,
+        (this.isSelectable || this.areCellsClickable) ? 'clickable' : null,
         this.isSelected ? 'selected' : null
       ]
     },
@@ -91,7 +95,7 @@ export default {
         for (let y = 0; y < this.size.y; y++) {
           const row = []
           for (let x = 0; x < this.size.x; x++) {
-            row.push({ x, y, color: null })
+            row.push({ color: null })
           }
           result.push(row)
         }
@@ -119,7 +123,7 @@ table {
   width: max-content;
 }
 
-table.selectable:hover {
+table.clickable:hover {
   cursor: pointer;
 }
 

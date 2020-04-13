@@ -1,28 +1,21 @@
 <template>
-  <td :style="cssStyle" />
+  <td
+    :style="cssStyle"
+    @[clickEventName]="$emit('cell-clicked')"
+  />
 </template>
 
 <script>
 export default {
   name: 'Cell',
   props: {
-    x: {
-      type: Number,
-      required: true,
-      validator: function (value) {
-        return value >= 0
-      }
-    },
-    y: {
-      type: Number,
-      required: true,
-      validator: function (value) {
-        return value >= 0
-      }
-    },
     color: {
       type: String,
       default: null
+    },
+    isClickable: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -32,6 +25,9 @@ export default {
         result['background-color'] = this.color
       }
       return result
+    },
+    clickEventName: function () {
+      return this.isClickable ? 'click' : null
     }
   }
 }

@@ -2,7 +2,8 @@
   <div class="main">
     <World
       :size="world.size"
-      :is-selectable="true"
+      :are-cells-clickable="true"
+      @cell-clicked="cellClicked"
     />
   </div>
 </template>
@@ -21,6 +22,12 @@ export default {
         size: { x: 0, y: 0 },
         cellList: []
       }
+    }
+  },
+  methods: {
+    cellClicked: function (message) {
+      // TODO Implement
+      console.log('game screen', message)
     }
   },
   sockets: {
