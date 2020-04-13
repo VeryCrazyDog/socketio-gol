@@ -36,33 +36,64 @@ A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 
 
 ## Install dependency
-For local development, run the following command.
-```
+For local development, run the following commands.
+```sh
+cd server
 npm install
+cd ..
+cd web
+npm install
+cd ..
 ```
 
-For production hosting, run the following command.
-```
-npm install --only=production
+For production hosting, run the following commands.
+```sh
+cd server
+npm ci --only=production
+cd ..
 ```
 
+
+## Build
+For production hosting, we need to build the frontend. This can be done using the following commands.
+```sh
+cd web
+npm ci
+npm run build
+rm -rf node_modules    # For Windows, run `rmdir /s /q node_modules` instead
+cd ..
+```
 
 ## Test
 After installed dependency for local development, run the following command.
-```
+```sh
+cd server
 npm test
+cd ..
 ```
 
 
 ## Run
-For local development, run the following command. By default this web application will
-listen to port 3000 so that you can access the application from your browser at http://localhost:3000.
-```
+For local development, first start the backend with the following commands:
+```sh
+cd server
 npm run nodemon
 ```
 
-To run in production mode, run the following command.
+Then in a separated terminal start the frontend with the following commands:
+```sh
+cd web
+npm run serve
 ```
+
+By default the backend listen to port 3000 and frontend development server listen to
+port 8080. The frontend development server will proxy the socket IO traffic to fixed
+port 3000. Therefore you can access this web application from your browser at http://localhost:8080.
+
+
+To run in production mode, make sure the frontend has been built, then run the following commands.
+```sh
+cd server
 npm start
 ```
 
@@ -70,13 +101,19 @@ This web application is ready for [Heroku] deployment by simply perform Git push
 
 
 ## Accepted environment variables
-The following environment variables are supported by this web application:
-- `PORT`: The port that this web application will listen to, default is `3000`.
-- `NODE_ENV`: The node environment that this web application will be running in. Possible
+The following environment variables are supported by the backend server:
+- `PORT`: The port that the backend server will listen to, default is `3000`.
+- `NODE_ENV`: The node environment that the backend server will be running in. Possible
 	values are `development` and `production`. Default is `undefined` which is equal
 	to `development`.
 - `LOG_LEVEL`: The log level of this web application. Default is `DEBUG`. Possible
 	values are `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR` and `SILENT`.
+
+The following environment variables are supported by the frontend development server:
+- `PORT`: The port that the frontend development server will listen to, default is `8080`.
+- `NODE_ENV`: The node environment for frontend development. This affect lint checking.
+	Possible values are `development` and `production`. Default is `undefined` which is equal
+	to `development`.
 
 
 ## TODO
@@ -116,10 +153,9 @@ This demo is licensed under the [MIT License](LICENSE).
 
 
 ## Acknowledge
-Source code `server/random-color.js` is written based on [random-color](https://www.npmjs.com/package/random-color).
+Source code `server/random-color.js` is written based on [random-color].
 
-Favicon is taken from [Wikipedia](https://commons.wikimedia.org/wiki/File:Game_of_life_fpento.svg)
-which is released to [public domain](https://en.wikipedia.org/wiki/en:public_domain).
+Favicon is taken from [Wikipedia][6] which is released to [public domain][7].
 
 
 
@@ -128,6 +164,9 @@ which is released to [public domain](https://en.wikipedia.org/wiki/en:public_dom
 [3]: https://github.com/Qix-/color/blob/a6fce8808b1845bfd38a6ccc5b9a369e010ada82/index.js#L366
 [4]: https://socket.io/docs/using-multiple-nodes/#Using-Node-JS-Cluster
 [5]: https://socket.io/docs/using-multiple-nodes/#Passing-events-between-nodes
+[6]: https://commons.wikimedia.org/wiki/File:Game_of_life_fpento.svg
+[7]: https://en.wikipedia.org/wiki/en:public_domain
 [Conway's Game of Life]: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 [Heroku]: https://www.heroku.com/
+[random-color]: https://www.npmjs.com/package/random-color
 [Socket.IO]: https://socket.io/
