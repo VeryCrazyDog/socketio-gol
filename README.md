@@ -13,7 +13,7 @@ A workable demo is hosted on https://socketio-gol.herokuapp.com/.
 - World update only happens when there is at least one player connected.
 - When new cell is produced, it's color will be a [color mix][3]
 	of all 3 cells around it.
-- Tested to work on Chrome, Firefox, Internet Explorer 11, Safari and Chrome for Android.
+- Tested to work on Chrome.
 
 
 ## Limitations
