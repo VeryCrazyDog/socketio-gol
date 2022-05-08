@@ -5,8 +5,6 @@ This is similar to the [chat demo][1] and [whiteboard demo][2] available on Sock
 Socket IO is used because WebSocket protocol is best suitable for real-time application
 which requires low latency and bi-direction communication.
 
-A workable demo is hosted on https://socketio-gol.herokuapp.com/.
-
 
 ## Features
 - Allow multiple players accessing the same world. Every player will be assigned with a random color.
